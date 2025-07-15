@@ -1,0 +1,149 @@
+<!-- Bandcamp Integration Example -->
+<!-- Add this to the music section of the main HTML file -->
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="retro-card p-4 rounded-3">
+            <h4 class="text-danger mb-3">
+                <i class="fas fa-headphones me-2"></i>Stream on Bandcamp
+            </h4>
+            <p class="mb-3">Listen to the complete "Five Star" album directly from the official Bandcamp page:</p>
+            
+            <!-- Bandcamp Album Embed -->
+            <div class="bandcamp-embed-container mb-3">
+                <iframe 
+                    style="border: 0; width: 100%; height: 470px;" 
+                    src="https://bandcamp.com/EmbeddedPlayer/album=2664590/size=large/bgcol=1a1a2e/linkcol=e94560/tracklist=false/transparent=true/" 
+                    seamless>
+                    <a href="https://honeymoonsuites.bandcamp.com/album/five-star">
+                        Five Star by The Honeymoon Suites
+                    </a>
+                </iframe>
+            </div>
+            
+            <!-- Individual Track Embeds (Alternative) -->
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-danger mb-2">Featured Tracks:</h6>
+                    
+                    <!-- Los Libidos -->
+                    <div class="mb-3">
+                        <iframe 
+                            style="border: 0; width: 100%; height: 120px;" 
+                            src="https://bandcamp.com/EmbeddedPlayer/track=los-libidos/size=large/bgcol=1a1a2e/linkcol=e94560/tracklist=false/artwork=small/transparent=true/" 
+                            seamless>
+                        </iframe>
+                    </div>
+                    
+                    <!-- Quality Babe -->
+                    <div class="mb-3">
+                        <iframe 
+                            style="border: 0; width: 100%; height: 120px;" 
+                            src="https://bandcamp.com/EmbeddedPlayer/track=quality-babe/size=large/bgcol=1a1a2e/linkcol=e94560/tracklist=false/artwork=small/transparent=true/" 
+                            seamless>
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <!-- Streaming Options -->
+                    <div class="streaming-options">
+                        <h6 class="text-danger mb-3">Listen Everywhere:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="https://honeymoonsuites.bandcamp.com/" 
+                               class="btn btn-outline-light btn-sm" 
+                               target="_blank">
+                                <i class="fab fa-bandcamp me-1"></i>Bandcamp
+                            </a>
+                            <button class="btn btn-outline-danger btn-sm" 
+                                    onclick="searchOnYouTube('Honeymoon Suites Five Star album')">
+                                <i class="fab fa-youtube me-1"></i>YouTube
+                            </button>
+                            <button class="btn btn-outline-success btn-sm" 
+                                    onclick="searchOnSpotify('Honeymoon Suites')">
+                                <i class="fab fa-spotify me-1"></i>Spotify
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" 
+                                    onclick="searchOnSoundCloud('Honeymoon Suites')">
+                                <i class="fab fa-soundcloud me-1"></i>SoundCloud
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Purchase Options -->
+                    <div class="mt-4">
+                        <h6 class="text-danger mb-3">Support the Artist:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="https://honeymoonsuites.bandcamp.com/album/five-star" 
+                               class="btn btn-danger btn-sm" 
+                               target="_blank">
+                                <i class="fas fa-shopping-cart me-1"></i>Buy Digital
+                            </a>
+                            <a href="https://honeymoonsuites.bandcamp.com/merch" 
+                               class="btn btn-outline-light btn-sm" 
+                               target="_blank">
+                                <i class="fas fa-tshirt me-1"></i>Merch
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Helper functions for external streaming services
+function searchOnYouTube(query) {
+    const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+    window.open(searchUrl, '_blank');
+}
+
+function searchOnSpotify(query) {
+    const searchUrl = `https://open.spotify.com/search/${encodeURIComponent(query)}`;
+    window.open(searchUrl, '_blank');
+}
+
+function searchOnSoundCloud(query) {
+    const searchUrl = `https://soundcloud.com/search?q=${encodeURIComponent(query)}`;
+    window.open(searchUrl, '_blank');
+}
+
+// Bandcamp Player Integration
+class BandcampPlayerIntegration {
+    constructor() {
+        this.setupBandcampListeners();
+    }
+    
+    setupBandcampListeners() {
+        // Listen for Bandcamp player events (if available)
+        window.addEventListener('message', (event) => {
+            if (event.origin === 'https://bandcamp.com') {
+                this.handleBandcampMessage(event.data);
+            }
+        });
+    }
+    
+    handleBandcampMessage(data) {
+        // Handle Bandcamp player state changes
+        if (data.type === 'play') {
+            console.log('Bandcamp track started playing');
+            // Update your UI accordingly
+        } else if (data.type === 'pause') {
+            console.log('Bandcamp track paused');
+            // Update your UI accordingly
+        }
+    }
+    
+    // Method to control Bandcamp embeds (limited functionality)
+    sendMessageToBandcamp(message) {
+        const bandcampIframes = document.querySelectorAll('iframe[src*="bandcamp.com"]');
+        bandcampIframes.forEach(iframe => {
+            iframe.contentWindow.postMessage(message, 'https://bandcamp.com');
+        });
+    }
+}
+
+// Initialize Bandcamp integration
+const bandcampIntegration = new BandcampPlayerIntegration();
+</script>

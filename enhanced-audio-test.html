@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Audio Test - Kevin Parissien & The Honeymoon Suites</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .glam-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .track-result {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .track-result:hover {
+            background: rgba(233, 69, 96, 0.1);
+            border-color: #e94560;
+        }
+        
+        .status-found { color: #28a745; }
+        .status-not-found { color: #dc3545; }
+        .status-testing { color: #ffc107; }
+        
+        .video-preview {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .log-output {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 glam-text mb-3">Enhanced Audio Test</h1>
+            <h2 class="h4 text-light">The Honeymoon Suites - YouTube Discovery</h2>
+            <p class="text-muted">Testing YouTube API with your provided key</p>
+        </div>
+
+        <!-- API Status -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-key me-2"></i>API Status
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>YouTube Data API v3 Key Loaded</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-globe text-info me-2"></i>
+                        <span>Ready for global search</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-music text-warning me-2"></i>
+                        <span>Searching for Honeymoon Suites tracks</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger mb-2 w-100" onclick="startAutoSearch()">
+                        <i class="fas fa-search me-1"></i>Start Auto Search
+                    </button>
+                    <button class="btn btn-outline-light mb-2 w-100" onclick="clearResults()">
+                        <i class="fas fa-trash me-1"></i>Clear Results
+                    </button>
+                    <button class="btn btn-outline-success w-100" onclick="exportFindings()">
+                        <i class="fas fa-download me-1"></i>Export Findings
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-list-music me-2"></i>Track Discovery Results
+            </h3>
+            <div id="searchResults">
+                <p class="text-muted text-center">Click "Start Auto Search" to begin discovering tracks...</p>
+            </div>
+        </div>
+
+        <!-- Live Player Test -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-play-circle me-2"></i>Live Player Test
+            </h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div id="playerContainer" class="bg-dark rounded p-3">
+                        <div id="youtubePlayer"></div>
+                        <div id="playerInfo" class="mt-2 text-center text-muted">
+                            Select a found track to test playback
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bg-dark rounded p-3">
+                        <h5 class="text-warning mb-3">Player Controls</h5>
+                        <div class="mb-2">
+                            <strong>Current Track:</strong>
+                            <div id="currentTrackInfo" class="text-light">None</div>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Channel:</strong>
+                            <div id="currentChannelInfo" class="text-info">-</div>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Video ID:</strong>
+                            <div id="currentVideoId" class="text-muted small">-</div>
+                        </div>
+                        <button class="btn btn-outline-light btn-sm w-100 mb-2" onclick="togglePlayback()">
+                            <i class="fas fa-play me-1"></i>Play/Pause
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm w-100" onclick="stopPlayback()">
+                            <i class="fas fa-stop me-1"></i>Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Debug Log -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-terminal me-2"></i>Search Log
+            </h3>
+            <div class="log-output" id="searchLog">
+                <div>[READY] Enhanced Audio Test initialized with YouTube API key</div>
+                <div>[READY] Waiting for search command...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Audio Test with Real YouTube API Integration
+        class EnhancedAudioTest {
+            constructor() {
+                this.apiKey = 'AIzaSyB8K0ihnB9gsr45LBCYU7I7We4KxhG7YeA';
+                this.youtubePlayer = null;
+                this.searchResults = [];
+                this.currentTrack = null;
+                
+                this.tracks = [
+                    { title: "Is it really you?", duration: "5:40", queries: [
+                        "Honeymoon Suites Is it really you",
+                        "The Honeymoon Suites Is it really you South Africa",
+                        '"Is it really you" Honeymoon Suites'
+                    ]},
+                    { title: "Los Libidos", duration: "6:29", queries: [
+                        "Honeymoon Suites Los Libidos",
+                        "The Honeymoon Suites Los Libidos",
+                        '"Los Libidos" Honeymoon Suites Cape Town'
+                    ]},
+                    { title: "Spanish Fly", duration: "5:47", queries: [
+                        "Honeymoon Suites Spanish Fly",
+                        "The Honeymoon Suites Spanish Fly",
+                        '"Spanish Fly" Honeymoon Suites'
+                    ]},
+                    { title: "Shoes", duration: "5:14", queries: [
+                        "Honeymoon Suites Shoes",
+                        "The Honeymoon Suites Shoes",
+                        '"Shoes" Honeymoon Suites'
+                    ]},
+                    { title: "You make me tremble", duration: "5:55", queries: [
+                        "Honeymoon Suites You make me tremble",
+                        "The Honeymoon Suites You make me tremble",
+                        '"You make me tremble" Honeymoon Suites'
+                    ]},
+                    { title: "Quality Babe", duration: "6:42", queries: [
+                        "Honeymoon Suites Quality Babe",
+                        "The Honeymoon Suites Quality Babe",
+                        '"Quality Babe" Honeymoon Suites'
+                    ]},
+                    { title: "Powdered Love", duration: "5:01", queries: [
+                        "Honeymoon Suites Powdered Love",
+                        "The Honeymoon Suites Powdered Love",
+                        '"Powdered Love" Honeymoon Suites'
+                    ]},
+                    { title: "Oh my God (Evil twin)", duration: "3:28", queries: [
+                        "Honeymoon Suites Oh my God Evil twin",
+                        "The Honeymoon Suites Oh my God",
+                        '"Oh my God" Honeymoon Suites'
+                    ]},
+                    { title: "Work that skirt", duration: "4:00", queries: [
+                        "Honeymoon Suites Work that skirt",
+                        "The Honeymoon Suites Work that skirt",
+                        '"Work that skirt" Honeymoon Suites'
+                    ]},
+                    { title: "Dr. Strangelove", duration: "5:46", queries: [
+                        "Honeymoon Suites Dr Strangelove",
+                        "The Honeymoon Suites Dr Strangelove",
+                        '"Dr Strangelove" Honeymoon Suites'
+                    ]},
+                    { title: "Party in my head", duration: "6:21", queries: [
+                        "Honeymoon Suites Party in my head",
+                        "The Honeymoon Suites Party in my head",
+                        '"Party in my head" Honeymoon Suites'
+                    ]},
+                    { title: "Los Libidos (Radio Mix)", duration: "3:33", queries: [
+                        "Honeymoon Suites Los Libidos Radio Mix",
+                        "The Honeymoon Suites Los Libidos Radio",
+                        '"Los Libidos Radio Mix" Honeymoon Suites'
+                    ]}
+                ];
+                
+                this.initYouTubePlayer();
+            }
+            
+            log(message, type = 'INFO') {
+                const logElement = document.getElementById('searchLog');
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.innerHTML = `[${timestamp}] [${type}] ${message}`;
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+            
+            async initYouTubePlayer() {
+                this.log('Loading YouTube IFrame API...');
+                
+                if (window.YT && window.YT.Player) {
+                    this.createPlayer();
+                    return;
+                }
+                
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                document.head.appendChild(tag);
+                
+                window.onYouTubeIframeAPIReady = () => {
+                    this.log('YouTube API loaded successfully', 'SUCCESS');
+                    this.createPlayer();
+                };
+            }
+            
+            createPlayer() {
+                this.youtubePlayer = new YT.Player('youtubePlayer', {
+                    height: '315',
+                    width: '100%',
+                    playerVars: {
+                        'autoplay': 0,
+                        'controls': 1,
+                        'modestbranding': 1,
+                        'rel': 0
+                    },
+                    events: {
+                        'onReady': () => {
+                            this.log('YouTube player ready for testing', 'SUCCESS');
+                        },
+                        'onStateChange': (event) => this.onPlayerStateChange(event)
+                    }
+                });
+            }
+            
+            onPlayerStateChange(event) {
+                const states = {
+                    [YT.PlayerState.PLAYING]: 'Playing',
+                    [YT.PlayerState.PAUSED]: 'Paused',
+                    [YT.PlayerState.ENDED]: 'Ended',
+                    [YT.PlayerState.BUFFERING]: 'Buffering'
+                };
+                
+                const state = states[event.data] || 'Unknown';
+                this.log(`Player state: ${state}`);
+            }
+            
+            async searchTrack(track) {
+                this.log(`Searching for: "${track.title}"`);
+                
+                for (const query of track.queries) {
+                    try {
+                        this.log(`Trying query: "${query}"`);
+                        const results = await this.searchYouTube(query);
+                        
+                        if (results.length > 0) {
+                            const bestMatch = this.findBestMatch(results, track);
+                            this.log(`Found match: "${bestMatch.snippet.title}" by ${bestMatch.snippet.channelTitle}`, 'SUCCESS');
+                            return {
+                                track: track,
+                                result: bestMatch,
+                                query: query,
+                                allResults: results
+                            };
+                        }
+                    } catch (error) {
+                        this.log(`Query failed: ${error.message}`, 'ERROR');
+                    }
+                    
+                    // Small delay between queries
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                
+                this.log(`No results found for: "${track.title}"`, 'WARNING');
+                return {
+                    track: track,
+                    result: null,
+                    query: null,
+                    allResults: []
+                };
+            }
+            
+            async searchYouTube(query) {
+                const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${this.apiKey}&maxResults=10`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
+                }
+                
+                const data = await response.json();
+                return data.items || [];
+            }
+            
+            findBestMatch(searchResults, track) {
+                let bestMatch = searchResults[0];
+                let bestScore = 0;
+                
+                searchResults.forEach(result => {
+                    let score = 0;
+                    const title = result.snippet.title.toLowerCase();
+                    const channel = result.snippet.channelTitle.toLowerCase();
+                    const trackTitle = track.title.toLowerCase();
+                    
+                    // Title similarity
+                    if (title.includes(trackTitle)) score += 15;
+                    if (title.includes('honeymoon')) score += 10;
+                    if (title.includes('suites')) score += 10;
+                    
+                    // Channel credibility
+                    if (channel.includes('honeymoon')) score += 20;
+                    if (channel.includes('official')) score += 15;
+                    if (channel.includes('music')) score += 5;
+                    
+                    // Quality indicators
+                    if (title.includes('official')) score += 10;
+                    if (title.includes('hd') || title.includes('high quality')) score += 3;
+                    
+                    // Avoid covers and remixes
+                    if (title.includes('cover')) score -= 8;
+                    if (title.includes('remix')) score -= 5;
+                    if (title.includes('karaoke')) score -= 10;
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = result;
+                    }
+                });
+                
+                return bestMatch;
+            }
+            
+            displayResults(searchResults) {
+                const container = document.getElementById('searchResults');
+                container.innerHTML = '';
+                
+                searchResults.forEach((result, index) => {
+                    const resultElement = document.createElement('div');
+                    resultElement.className = 'track-result p-3';
+                    
+                    if (result.result) {
+                        resultElement.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h5 class="status-found mb-1">
+                                        <i class="fas fa-check-circle me-2"></i>${result.track.title}
+                                    </h5>
+                                    <p class="mb-1"><strong>Found:</strong> "${result.result.snippet.title}"</p>
+                                    <p class="mb-1"><strong>Channel:</strong> ${result.result.snippet.channelTitle}</p>
+                                    <p class="mb-1"><strong>Query:</strong> "${result.query}"</p>
+                                    <small class="text-muted">Video ID: ${result.result.id.videoId}</small>
+                                </div>
+                                <div class="text-end">
+                                    <button class="btn btn-outline-light btn-sm mb-2" onclick="testPlayer.playTrack('${result.result.id.videoId}', '${result.track.title}', '${result.result.snippet.channelTitle}')">
+                                        <i class="fas fa-play me-1"></i>Test Play
+                                    </button>
+                                    <br>
+                                    <a href="https://youtube.com/watch?v=${result.result.id.videoId}" target="_blank" class="btn btn-outline-danger btn-sm">
+                                        <i class="fab fa-youtube me-1"></i>Open
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        resultElement.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="status-not-found mb-1">
+                                        <i class="fas fa-times-circle me-2"></i>${result.track.title}
+                                    </h5>
+                                    <p class="mb-0 text-muted">No matches found on YouTube</p>
+                                </div>
+                                <div>
+                                    <span class="badge bg-secondary">Not Found</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    container.appendChild(resultElement);
+                });
+            }
+            
+            playTrack(videoId, title, channel) {
+                if (this.youtubePlayer) {
+                    this.youtubePlayer.loadVideoById(videoId);
+                    this.currentTrack = { videoId, title, channel };
+                    
+                    document.getElementById('currentTrackInfo').textContent = title;
+                    document.getElementById('currentChannelInfo').textContent = channel;
+                    document.getElementById('currentVideoId').textContent = videoId;
+                    document.getElementById('playerInfo').innerHTML = `
+                        <strong>Now Testing:</strong> ${title}<br>
+                        <small class="text-muted">by ${channel}</small>
+                    `;
+                    
+                    this.log(`Testing playback: "${title}" by ${channel}`, 'SUCCESS');
+                }
+            }
+        }
+        
+        // Global instance
+        let testPlayer;
+        
+        // Global functions
+        async function startAutoSearch() {
+            if (!testPlayer) {
+                testPlayer = new EnhancedAudioTest();
+                // Wait for YouTube API to load
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+            
+            testPlayer.log('Starting automated search for all tracks...', 'INFO');
+            const results = [];
+            
+            for (const track of testPlayer.tracks) {
+                const result = await testPlayer.searchTrack(track);
+                results.push(result);
+                
+                // Update display as we go
+                testPlayer.displayResults(results);
+                
+                // Delay between tracks to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+            
+            testPlayer.searchResults = results;
+            testPlayer.log(`Search complete! Found ${results.filter(r => r.result).length}/${results.length} tracks`, 'SUCCESS');
+        }
+        
+        function clearResults() {
+            document.getElementById('searchResults').innerHTML = '<p class="text-muted text-center">Results cleared. Click "Start Auto Search" to begin...</p>';
+            if (testPlayer) {
+                testPlayer.searchResults = [];
+                testPlayer.log('Results cleared', 'INFO');
+            }
+        }
+        
+        function exportFindings() {
+            if (!testPlayer || !testPlayer.searchResults.length) {
+                alert('No results to export. Run a search first.');
+                return;
+            }
+            
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                totalTracks: testPlayer.tracks.length,
+                foundTracks: testPlayer.searchResults.filter(r => r.result).length,
+                results: testPlayer.searchResults.map(r => ({
+                    trackTitle: r.track.title,
+                    found: !!r.result,
+                    youtubeTitle: r.result?.snippet.title,
+                    youtubeChannel: r.result?.snippet.channelTitle,
+                    videoId: r.result?.id.videoId,
+                    searchQuery: r.query
+                }))
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'honeymoon-suites-youtube-findings.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            if (testPlayer) {
+                testPlayer.log('Findings exported to JSON file', 'SUCCESS');
+            }
+        }
+        
+        function togglePlayback() {
+            if (testPlayer && testPlayer.youtubePlayer && testPlayer.currentTrack) {
+                const state = testPlayer.youtubePlayer.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                    testPlayer.youtubePlayer.pauseVideo();
+                } else {
+                    testPlayer.youtubePlayer.playVideo();
+                }
+            }
+        }
+        
+        function stopPlayback() {
+            if (testPlayer && testPlayer.youtubePlayer) {
+                testPlayer.youtubePlayer.stopVideo();
+                testPlayer.log('Playback stopped', 'INFO');
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Enhanced Audio Test ready with YouTube API key');
+        });
+    </script>
+</body>
+</html>
