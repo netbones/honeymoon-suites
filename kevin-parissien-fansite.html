@@ -42,6 +42,61 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        .music-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-top: 2px solid #e94560;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .music-player.active {
+            transform: translateY(0);
+        }
+        .playlist-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .playlist-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: #e94560;
+        }
+        .playlist-item.active {
+            background: rgba(233, 69, 96, 0.3);
+            border-color: #e94560;
+        }
+        .waveform {
+            height: 60px;
+            background: linear-gradient(90deg, #e94560, #4ecdc4, #45b7d1);
+            background-size: 200% 100%;
+            animation: waveAnimation 2s ease-in-out infinite;
+            border-radius: 4px;
+        }
+        @keyframes waveAnimation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .volume-slider {
+            width: 100px;
+        }
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #4ecdc4);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -76,9 +131,9 @@
                     <h2 class="display-4 glam-text mb-4">& The Honeymoon Suites</h2>
                     <p class="lead fs-3 mb-5">South Africa's Glamrock Legends of the 90s</p>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
-                        <a href="#music" class="btn btn-outline-light btn-lg px-4 py-2">
+                        <button id="playBtn" class="btn btn-outline-light btn-lg px-4 py-2" onclick="togglePlaylist()">
                             <i class="fas fa-play me-2"></i>Listen Now
-                        </a>
+                        </button>
                         <a href="#about" class="btn btn-light btn-lg px-4 py-2 text-dark">
                             <i class="fas fa-info-circle me-2"></i>Learn More
                         </a>
@@ -197,23 +252,47 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h5 class="text-danger mb-3">Track Listing:</h5>
-                                <ol class="list-unstyled text-start">
-                                    <li class="mb-2">1. Is it really you? <span class="text-muted">(5:40)</span></li>
-                                    <li class="mb-2">2. Los Libidos <span class="text-muted">(6:29)</span></li>
-                                    <li class="mb-2">3. Spanish Fly <span class="text-muted">(5:47)</span></li>
-                                    <li class="mb-2">4. Shoes <span class="text-muted">(5:14)</span></li>
-                                    <li class="mb-2">5. You make me tremble <span class="text-muted">(5:55)</span></li>
-                                    <li class="mb-2">6. Quality Babe <span class="text-muted">(6:42)</span></li>
+                                <ol class="list-unstyled text-start" id="trackList">
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="0">
+                                        <i class="fas fa-play me-2 text-danger"></i>1. Is it really you? <span class="text-muted">(5:40)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="1">
+                                        <i class="fas fa-play me-2 text-danger"></i>2. Los Libidos <span class="text-muted">(6:29)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="2">
+                                        <i class="fas fa-play me-2 text-danger"></i>3. Spanish Fly <span class="text-muted">(5:47)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="3">
+                                        <i class="fas fa-play me-2 text-danger"></i>4. Shoes <span class="text-muted">(5:14)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="4">
+                                        <i class="fas fa-play me-2 text-danger"></i>5. You make me tremble <span class="text-muted">(5:55)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="5">
+                                        <i class="fas fa-play me-2 text-danger"></i>6. Quality Babe <span class="text-muted">(6:42)</span>
+                                    </li>
                                 </ol>
                             </div>
                             <div class="col-md-6">
                                 <ol class="list-unstyled text-start" start="7">
-                                    <li class="mb-2">7. Powdered Love <span class="text-muted">(5:01)</span></li>
-                                    <li class="mb-2">8. Oh my God (Evil twin) <span class="text-muted">(3:28)</span></li>
-                                    <li class="mb-2">9. Work that skirt <span class="text-muted">(4:00)</span></li>
-                                    <li class="mb-2">10. Dr. Strangelove <span class="text-muted">(5:46)</span></li>
-                                    <li class="mb-2">11. Party in my head <span class="text-muted">(6:21)</span></li>
-                                    <li class="mb-2">12. Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span></li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="6">
+                                        <i class="fas fa-play me-2 text-danger"></i>7. Powdered Love <span class="text-muted">(5:01)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="7">
+                                        <i class="fas fa-play me-2 text-danger"></i>8. Oh my God (Evil twin) <span class="text-muted">(3:28)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="8">
+                                        <i class="fas fa-play me-2 text-danger"></i>9. Work that skirt <span class="text-muted">(4:00)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="9">
+                                        <i class="fas fa-play me-2 text-danger"></i>10. Dr. Strangelove <span class="text-muted">(5:46)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="10">
+                                        <i class="fas fa-play me-2 text-danger"></i>11. Party in my head <span class="text-muted">(6:21)</span>
+                                    </li>
+                                    <li class="mb-2 playlist-item p-2 rounded" data-track="11">
+                                        <i class="fas fa-play me-2 text-danger"></i>12. Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span>
+                                    </li>
                                 </ol>
                             </div>
                         </div>
@@ -357,6 +436,66 @@
         </div>
     </section>
 
+    <!-- Music Player -->
+    <div id="musicPlayer" class="music-player">
+        <div class="container-fluid p-3">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="bg-gradient-to-br from-pink-500 to-purple-600 rounded" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-music text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white" id="currentTrack">Select a track</h6>
+                            <small class="text-muted">The Honeymoon Suites</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="text-center mb-2">
+                        <button class="btn btn-outline-light btn-sm me-2" onclick="previousTrack()">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="btn btn-danger btn-lg me-2" id="playPauseBtn" onclick="togglePlay()">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="btn btn-outline-light btn-sm me-2" onclick="nextTrack()">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        <button class="btn btn-outline-light btn-sm" onclick="toggleShuffle()" id="shuffleBtn">
+                            <i class="fas fa-random"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="progress-bar" onclick="seekTo(event)">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-1">
+                        <small class="text-muted" id="currentTime">0:00</small>
+                        <small class="text-muted" id="totalTime">0:00</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <i class="fas fa-volume-up text-white me-2"></i>
+                        <input type="range" class="volume-slider" min="0" max="100" value="70" id="volumeSlider" onchange="setVolume(this.value)">
+                        <button class="btn btn-outline-light btn-sm ms-3" onclick="togglePlaylist()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Waveform Visualization -->
+            <div class="waveform mt-2" id="waveform"></div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-dark py-4">
         <div class="container">
@@ -391,6 +530,193 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Music Player JavaScript
+        class HoneymoonSuitesPlayer {
+            constructor() {
+                this.playlist = [
+                    { title: "Is it really you?", duration: "5:40", file: "demo-track-1.mp3" },
+                    { title: "Los Libidos", duration: "6:29", file: "demo-track-2.mp3" },
+                    { title: "Spanish Fly", duration: "5:47", file: "demo-track-3.mp3" },
+                    { title: "Shoes", duration: "5:14", file: "demo-track-4.mp3" },
+                    { title: "You make me tremble", duration: "5:55", file: "demo-track-5.mp3" },
+                    { title: "Quality Babe", duration: "6:42", file: "demo-track-6.mp3" },
+                    { title: "Powdered Love", duration: "5:01", file: "demo-track-7.mp3" },
+                    { title: "Oh my God (Evil twin)", duration: "3:28", file: "demo-track-8.mp3" },
+                    { title: "Work that skirt", duration: "4:00", file: "demo-track-9.mp3" },
+                    { title: "Dr. Strangelove", duration: "5:46", file: "demo-track-10.mp3" },
+                    { title: "Party in my head", duration: "6:21", file: "demo-track-11.mp3" },
+                    { title: "Los Libidos (Radio Mix)", duration: "3:33", file: "demo-track-12.mp3" }
+                ];
+                
+                this.currentTrackIndex = 0;
+                this.isPlaying = false;
+                this.isShuffled = false;
+                this.volume = 0.7;
+                this.currentTime = 0;
+                this.duration = 0;
+                
+                // Create audio context for demo purposes
+                this.audioContext = null;
+                this.demoInterval = null;
+                
+                this.initializePlayer();
+            }
+            
+            initializePlayer() {
+                // Add click listeners to playlist items
+                document.querySelectorAll('.playlist-item').forEach((item, index) => {
+                    item.addEventListener('click', () => this.playTrack(index));
+                });
+                
+                // Initialize demo audio simulation
+                this.simulateAudioPlayback();
+            }
+            
+            simulateAudioPlayback() {
+                // Since we don't have actual audio files, we'll simulate playback
+                // In a real implementation, you'd use the Web Audio API or HTML5 audio
+                this.demoInterval = setInterval(() => {
+                    if (this.isPlaying) {
+                        this.currentTime += 1;
+                        this.updateProgress();
+                        
+                        // Auto-advance to next track when current ends
+                        if (this.currentTime >= this.getDurationInSeconds()) {
+                            this.nextTrack();
+                        }
+                    }
+                }, 1000);
+            }
+            
+            getDurationInSeconds() {
+                const duration = this.playlist[this.currentTrackIndex].duration;
+                const [minutes, seconds] = duration.split(':').map(Number);
+                return minutes * 60 + seconds;
+            }
+            
+            playTrack(index) {
+                this.currentTrackIndex = index;
+                this.currentTime = 0;
+                this.duration = this.getDurationInSeconds();
+                
+                // Update UI
+                document.getElementById('currentTrack').textContent = this.playlist[index].title;
+                document.getElementById('totalTime').textContent = this.playlist[index].duration;
+                
+                // Update playlist visual state
+                document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+                
+                this.play();
+            }
+            
+            play() {
+                this.isPlaying = true;
+                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                document.getElementById('waveform').style.animationPlayState = 'running';
+            }
+            
+            pause() {
+                this.isPlaying = false;
+                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+                document.getElementById('waveform').style.animationPlayState = 'paused';
+            }
+            
+            togglePlay() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            }
+            
+            nextTrack() {
+                let nextIndex;
+                if (this.isShuffled) {
+                    nextIndex = Math.floor(Math.random() * this.playlist.length);
+                } else {
+                    nextIndex = (this.currentTrackIndex + 1) % this.playlist.length;
+                }
+                this.playTrack(nextIndex);
+            }
+            
+            previousTrack() {
+                const prevIndex = this.currentTrackIndex === 0 ? 
+                    this.playlist.length - 1 : this.currentTrackIndex - 1;
+                this.playTrack(prevIndex);
+            }
+            
+            toggleShuffle() {
+                this.isShuffled = !this.isShuffled;
+                const shuffleBtn = document.getElementById('shuffleBtn');
+                shuffleBtn.classList.toggle('btn-danger', this.isShuffled);
+                shuffleBtn.classList.toggle('btn-outline-light', !this.isShuffled);
+            }
+            
+            setVolume(value) {
+                this.volume = value / 100;
+                // In a real implementation, you'd set the audio element volume
+            }
+            
+            seekTo(event) {
+                const progressBar = event.currentTarget;
+                const rect = progressBar.getBoundingClientRect();
+                const percentage = (event.clientX - rect.left) / rect.width;
+                this.currentTime = percentage * this.duration;
+                this.updateProgress();
+            }
+            
+            updateProgress() {
+                const percentage = (this.currentTime / this.duration) * 100;
+                document.getElementById('progressFill').style.width = percentage + '%';
+                document.getElementById('currentTime').textContent = this.formatTime(this.currentTime);
+            }
+            
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        // Global player instance
+        let player;
+        
+        // Global functions for UI interaction
+        function togglePlaylist() {
+            const musicPlayer = document.getElementById('musicPlayer');
+            musicPlayer.classList.toggle('active');
+            
+            if (!player && musicPlayer.classList.contains('active')) {
+                player = new HoneymoonSuitesPlayer();
+            }
+        }
+        
+        function togglePlay() {
+            if (player) player.togglePlay();
+        }
+        
+        function nextTrack() {
+            if (player) player.nextTrack();
+        }
+        
+        function previousTrack() {
+            if (player) player.previousTrack();
+        }
+        
+        function toggleShuffle() {
+            if (player) player.toggleShuffle();
+        }
+        
+        function setVolume(value) {
+            if (player) player.setVolume(value);
+        }
+        
+        function seekTo(event) {
+            if (player) player.seekTo(event);
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -418,6 +744,42 @@
                     this.style.transform = 'translateY(0)';
                 });
             });
+            
+            // Add click listeners to track list items
+            document.querySelectorAll('.playlist-item').forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    // Open player if not already open
+                    const musicPlayer = document.getElementById('musicPlayer');
+                    if (!musicPlayer.classList.contains('active')) {
+                        togglePlaylist();
+                    }
+                    
+                    // Play the selected track
+                    setTimeout(() => {
+                        if (player) player.playTrack(index);
+                    }, 300);
+                });
+            });
+        });
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (!player) return;
+            
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    player.togglePlay();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    player.nextTrack();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    player.previousTrack();
+                    break;
+            }
         });
     </script>
 </body>
