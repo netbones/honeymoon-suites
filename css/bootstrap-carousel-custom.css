@@ -1,0 +1,138 @@
+/* Custom Bootstrap Carousel Styling for Album Carousel */
+
+#albumCarousel {
+    margin: 2rem 0;
+}
+
+#albumCarousel .carousel-item {
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Custom carousel controls */
+#albumCarousel .carousel-control-prev,
+#albumCarousel .carousel-control-next {
+    background: rgba(233, 69, 96, 0.8);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#albumCarousel .carousel-control-prev {
+    left: -25px;
+}
+
+#albumCarousel .carousel-control-next {
+    right: -25px;
+}
+
+#albumCarousel .carousel-control-prev:hover,
+#albumCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background: rgba(233, 69, 96, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+#albumCarousel .carousel-control-prev-icon,
+#albumCarousel .carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Custom carousel indicators */
+#albumCarousel .carousel-indicators {
+    bottom: -50px;
+    margin-bottom: 0;
+}
+
+#albumCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+#albumCarousel .carousel-indicators button.active {
+    background-color: #e94560;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+
+#albumCarousel .carousel-indicators button:hover {
+    background-color: rgba(233, 69, 96, 0.7);
+    transform: scale(1.1);
+}
+
+/* Album cover hover effects */
+.album-cover img,
+.album-cover > div {
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #albumCarousel .carousel-control-prev,
+    #albumCarousel .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #albumCarousel .carousel-control-prev {
+        left: -20px;
+    }
+    
+    #albumCarousel .carousel-control-next {
+        right: -20px;
+    }
+    
+    #albumCarousel .carousel-control-prev-icon,
+    #albumCarousel .carousel-control-next-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    #albumCarousel .retro-card {
+        padding: 2rem !important;
+    }
+    
+    #albumCarousel .row {
+        text-align: center;
+    }
+    
+    #albumCarousel .col-lg-7 {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #albumCarousel .carousel-control-prev,
+    #albumCarousel .carousel-control-next {
+        display: none;
+    }
+    
+    #albumCarousel .retro-card {
+        padding: 1.5rem !important;
+    }
+    
+    #albumCarousel .display-5 {
+        font-size: 2rem;
+    }
+    
+    #albumCarousel .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Touch/swipe enhancement for mobile */
+@media (hover: none) and (pointer: coarse) {
+    #albumCarousel .carousel-inner {
+        touch-action: pan-y pinch-zoom;
+    }
+}

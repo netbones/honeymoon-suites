@@ -10,6 +10,7 @@
     <link href="css/common.css" rel="stylesheet">
     <link href="css/music-player.css" rel="stylesheet">
     <link href="css/transitions.css" rel="stylesheet">
+    <link href="css/bootstrap-carousel-custom.css" rel="stylesheet">
     <style>
         .hero-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -156,67 +157,163 @@
     <section id="music" class="py-5 bg-gray-800">
         <div class="container">
             <h2 class="display-4 text-center glam-text mb-5">Discography</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="retro-card p-5 rounded-3 text-center">
-                        <div class="album-cover mb-4 lazy-image" style="width: 200px; height: 200px; margin: 0 auto;">
-                            <img data-src="assets/5star.jpeg" 
-                                 alt="Five Star Album Cover" 
-                                 class="mx-auto rounded-3" 
-                                 style="width: 200px; height: 200px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                        </div>
-                        <h3 class="text-danger mb-3">Five Star (1990s)</h3>
-                        <p class="lead mb-4">The definitive Honeymoon Suites experience</p>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5 class="text-danger mb-3">Track Listing:</h5>
-                                <ol class="list-unstyled text-start" id="trackList">
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="0">
-                                        <i class="fas fa-play me-2 text-danger"></i>1. Is it really you? <span class="text-muted">(5:40)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="1">
-                                        <i class="fas fa-play me-2 text-danger"></i>2. Los Libidos <span class="text-muted">(6:29)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="2">
-                                        <i class="fas fa-play me-2 text-danger"></i>3. Spanish Fly <span class="text-muted">(5:47)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="3">
-                                        <i class="fas fa-play me-2 text-danger"></i>4. Shoes <span class="text-muted">(5:14)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="4">
-                                        <i class="fas fa-play me-2 text-danger"></i>5. You make me tremble <span class="text-muted">(5:55)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="5">
-                                        <i class="fas fa-play me-2 text-danger"></i>6. Quality Babe <span class="text-muted">(6:42)</span>
-                                    </li>
-                                </ol>
+            
+            <!-- Bootstrap Carousel for Albums -->
+            <div id="albumCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#albumCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Five Star Album"></button>
+                    <button type="button" data-bs-target="#albumCarousel" data-bs-slide-to="1" aria-label="Greatest Hits Album"></button>
+                </div>
+                
+                <!-- Carousel Inner -->
+                <div class="carousel-inner">
+                    <!-- Five Star Album -->
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <div class="retro-card p-5 rounded-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-5 text-center mb-4 mb-lg-0">
+                                            <div class="album-cover mb-4 lazy-image" style="width: 250px; height: 250px; margin: 0 auto;">
+                                                <img data-src="assets/5star.jpeg" 
+                                                     alt="Five Star Album Cover" 
+                                                     class="mx-auto rounded-3" 
+                                                     style="width: 250px; height: 250px; object-fit: cover; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                                            </div>
+                                            <h3 class="text-danger mb-3">Five Star (1990s)</h3>
+                                            <p class="lead mb-4">The definitive Honeymoon Suites experience</p>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <h5 class="text-danger mb-3">Track Listing:</h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ol class="list-unstyled text-start" id="trackList">
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="0">
+                                                            <i class="fas fa-play me-2 text-danger"></i>1. Is it really you? <span class="text-muted">(5:40)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="1">
+                                                            <i class="fas fa-play me-2 text-danger"></i>2. Los Libidos <span class="text-muted">(6:29)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="2">
+                                                            <i class="fas fa-play me-2 text-danger"></i>3. Spanish Fly <span class="text-muted">(5:47)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="3">
+                                                            <i class="fas fa-play me-2 text-danger"></i>4. Shoes <span class="text-muted">(5:14)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="4">
+                                                            <i class="fas fa-play me-2 text-danger"></i>5. You make me tremble <span class="text-muted">(5:55)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="5">
+                                                            <i class="fas fa-play me-2 text-danger"></i>6. Quality Babe <span class="text-muted">(6:42)</span>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ol class="list-unstyled text-start" start="7">
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="6">
+                                                            <i class="fas fa-play me-2 text-danger"></i>7. Powdered Love <span class="text-muted">(5:01)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="7">
+                                                            <i class="fas fa-play me-2 text-danger"></i>8. Oh my God (Evil twin) <span class="text-muted">(3:28)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="8">
+                                                            <i class="fas fa-play me-2 text-danger"></i>9. Work that skirt <span class="text-muted">(4:00)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="9">
+                                                            <i class="fas fa-play me-2 text-danger"></i>10. Dr. Strangelove <span class="text-muted">(5:46)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="10">
+                                                            <i class="fas fa-play me-2 text-danger"></i>11. Party in my head <span class="text-muted">(6:21)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="11">
+                                                            <i class="fas fa-play me-2 text-danger"></i>12. Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <ol class="list-unstyled text-start" start="7">
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="6">
-                                        <i class="fas fa-play me-2 text-danger"></i>7. Powdered Love <span class="text-muted">(5:01)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="7">
-                                        <i class="fas fa-play me-2 text-danger"></i>8. Oh my God (Evil twin) <span class="text-muted">(3:28)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="8">
-                                        <i class="fas fa-play me-2 text-danger"></i>9. Work that skirt <span class="text-muted">(4:00)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="9">
-                                        <i class="fas fa-play me-2 text-danger"></i>10. Dr. Strangelove <span class="text-muted">(5:46)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="10">
-                                        <i class="fas fa-play me-2 text-danger"></i>11. Party in my head <span class="text-muted">(6:21)</span>
-                                    </li>
-                                    <li class="mb-2 playlist-item p-2 rounded" data-track="11">
-                                        <i class="fas fa-play me-2 text-danger"></i>12. Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span>
-                                    </li>
-                                </ol>
+                        </div>
+                    </div>
+                    
+                    <!-- Greatest Hits Album -->
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <div class="retro-card p-5 rounded-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-5 text-center mb-4 mb-lg-0">
+                                            <div class="album-cover mb-4 lazy-image" style="width: 250px; height: 250px; margin: 0 auto;">
+                                                <img data-src="assets/firstalbum.jpeg" 
+                                                     alt="Greatest Hits Album Cover" 
+                                                     class="mx-auto rounded-3" 
+                                                     style="width: 250px; height: 250px; object-fit: cover; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                                            </div>
+                                            <h3 class="text-danger mb-3">Greatest Hits</h3>
+                                            <p class="lead mb-4">The essential collection of Honeymoon Suites classics</p>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <h5 class="text-danger mb-3">Featured Tracks:</h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ol class="list-unstyled text-start">
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="0">
+                                                            <i class="fas fa-play me-2 text-danger"></i>1. Los Libidos <span class="text-muted">(6:29)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="2">
+                                                            <i class="fas fa-play me-2 text-danger"></i>2. Spanish Fly <span class="text-muted">(5:47)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="4">
+                                                            <i class="fas fa-play me-2 text-danger"></i>3. You make me tremble <span class="text-muted">(5:55)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="5">
+                                                            <i class="fas fa-play me-2 text-danger"></i>4. Quality Babe <span class="text-muted">(6:42)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="9">
+                                                            <i class="fas fa-play me-2 text-danger"></i>5. Dr. Strangelove <span class="text-muted">(5:46)</span>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ol class="list-unstyled text-start" start="6">
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="10">
+                                                            <i class="fas fa-play me-2 text-danger"></i>6. Party in my head <span class="text-muted">(6:21)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="6">
+                                                            <i class="fas fa-play me-2 text-danger"></i>7. Powdered Love <span class="text-muted">(5:01)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="8">
+                                                            <i class="fas fa-play me-2 text-danger"></i>8. Work that skirt <span class="text-muted">(4:00)</span>
+                                                        </li>
+                                                        <li class="mb-2 playlist-item p-2 rounded" data-track="11">
+                                                            <i class="fas fa-play me-2 text-danger"></i>9. Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span>
+                                                        </li>
+                                                        <li class="mb-2 text-muted p-2">
+                                                            <i class="fas fa-plus me-2"></i>+ Rare B-sides & unreleased tracks
+                                                        </li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#albumCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#albumCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
             
             <div class="row mt-5">
@@ -451,9 +548,15 @@
     <script src="js/transitions.js"></script>
     <script src="js/common.js"></script>
     <script src="js/music-player.js"></script>
+    <script src="js/album-carousel.js"></script>
     <script>
         // Page-specific initialization
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize album carousel
+            if (typeof initializeAlbumCarousel === 'function') {
+                initializeAlbumCarousel();
+            }
+            
             // Add click listeners to track list items
             document.querySelectorAll('.playlist-item').forEach((item, index) => {
                 item.addEventListener('click', function() {
