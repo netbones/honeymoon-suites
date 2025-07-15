@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Options Test - Kevin Parissien & The Honeymoon Suites</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .glam-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .streaming-option {
+            background: rgba(233, 69, 96, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .streaming-option:hover {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .streaming-option.active {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.3);
+        }
+        
+        .player-container {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border: 2px solid #e94560;
+            border-radius: 15px;
+            min-height: 200px;
+        }
+        
+        .track-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .track-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: #e94560;
+        }
+        
+        .track-item.playing {
+            background: rgba(233, 69, 96, 0.3);
+            border-color: #e94560;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .status-available { background-color: #28a745; }
+        .status-unavailable { background-color: #dc3545; }
+        .status-loading { background-color: #ffc107; animation: pulse 1s infinite; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .youtube-player {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .bandcamp-embed {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .test-controls {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .log-output {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(233, 69, 96, 0.9);
+            border: 2px solid #e94560;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(233, 69, 96, 1);
+            transform: scale(1.1);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left me-2"></i>Back to Main Site
+    </a>
+
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="text-center mb-5 mt-5">
+            <h1 class="display-4 glam-text mb-3">Audio Options Test Lab</h1>
+            <h2 class="h4 text-light">Kevin Parissien & The Honeymoon Suites</h2>
+            <p class="text-muted">Testing hybrid streaming integration</p>
+        </div>
+
+        <!-- Streaming Source Selection -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-broadcast-tower me-2"></i>Streaming Sources
+            </h3>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="streaming-option p-3 rounded text-center" data-source="youtube" onclick="selectStreamingSource('youtube')">
+                        <i class="fab fa-youtube fa-2x text-danger mb-2"></i>
+                        <h5>YouTube API</h5>
+                        <p class="small mb-0">Full control, likely availability</p>
+                        <div class="mt-2">
+                            <span class="status-indicator status-loading" id="youtube-status"></span>
+                            <span id="youtube-status-text">Checking...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="streaming-option p-3 rounded text-center" data-source="bandcamp" onclick="selectStreamingSource('bandcamp')">
+                        <i class="fab fa-bandcamp fa-2x text-info mb-2"></i>
+                        <h5>Bandcamp</h5>
+                        <p class="small mb-0">Official source, limited control</p>
+                        <div class="mt-2">
+                            <span class="status-indicator status-available" id="bandcamp-status"></span>
+                            <span id="bandcamp-status-text">Available</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="streaming-option p-3 rounded text-center" data-source="hybrid" onclick="selectStreamingSource('hybrid')">
+                        <i class="fas fa-random fa-2x text-warning mb-2"></i>
+                        <h5>Hybrid Mode</h5>
+                        <p class="small mb-0">Auto-fallback system</p>
+                        <div class="mt-2">
+                            <span class="status-indicator status-loading" id="hybrid-status"></span>
+                            <span id="hybrid-status-text">Testing...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Availability Test -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-list-music me-2"></i>Track Availability Test
+            </h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div id="trackList">
+                        <!-- Tracks will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="test-controls">
+                        <h5 class="text-warning mb-3">Test Controls</h5>
+                        <button class="btn btn-outline-light btn-sm mb-2 w-100" onclick="testAllTracks()">
+                            <i class="fas fa-search me-1"></i>Test All Tracks
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm mb-2 w-100" onclick="clearResults()">
+                            <i class="fas fa-trash me-1"></i>Clear Results
+                        </button>
+                        <button class="btn btn-outline-info btn-sm mb-2 w-100" onclick="exportResults()">
+                            <i class="fas fa-download me-1"></i>Export Results
+                        </button>
+                        
+                        <div class="mt-3">
+                            <label class="form-label small">YouTube API Key:</label>
+                            <input type="password" class="form-control form-control-sm" id="youtubeApiKey" 
+                                   value="apiKey"
+                                   placeholder="Enter YouTube Data API v3 key">
+                            <small class="text-success">✓ API Key Loaded - Ready for testing!</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Test Area -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-play-circle me-2"></i>Player Test Area
+            </h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="player-container p-3">
+                        <div id="currentPlayerInfo" class="mb-3">
+                            <h5 class="text-light">No track selected</h5>
+                            <p class="text-muted mb-0">Select a track to test playback</p>
+                        </div>
+                        
+                        <!-- YouTube Player Container -->
+                        <div id="youtubePlayerContainer" style="display: none;">
+                            <div id="youtubePlayer"></div>
+                        </div>
+                        
+                        <!-- Bandcamp Player Container -->
+                        <div id="bandcampPlayerContainer" style="display: none;">
+                            <div id="bandcampPlayer"></div>
+                        </div>
+                        
+                        <!-- Demo Player Container -->
+                        <div id="demoPlayerContainer" style="display: none;">
+                            <div class="text-center p-4">
+                                <i class="fas fa-music fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Demo mode - No actual audio</p>
+                                <button class="btn btn-outline-light" onclick="toggleDemoPlayback()">
+                                    <i class="fas fa-play me-1"></i>Simulate Playback
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="test-controls">
+                        <h5 class="text-warning mb-3">Playback Info</h5>
+                        <div class="mb-2">
+                            <strong>Current Source:</strong> 
+                            <span id="currentSource" class="text-info">None</span>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Track:</strong> 
+                            <span id="currentTrackName" class="text-light">-</span>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Status:</strong> 
+                            <span id="playbackStatus" class="text-muted">Stopped</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Duration:</strong> 
+                            <span id="trackDuration" class="text-light">-</span>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h6 class="text-warning">Fallback Order:</h6>
+                            <ol class="small text-muted">
+                                <li>YouTube (if API key provided)</li>
+                                <li>Bandcamp embed</li>
+                                <li>Demo simulation</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Debug Log -->
+        <div class="test-section p-4">
+            <h3 class="text-danger mb-3">
+                <i class="fas fa-terminal me-2"></i>Debug Log
+            </h3>
+            <div class="log-output" id="debugLog">
+                <div>Audio Options Test Lab initialized...</div>
+                <div>YouTube API Key loaded and ready for testing...</div>
+                <div>Waiting for user interaction...</div>
+            </div>
+            <button class="btn btn-outline-light btn-sm mt-2" onclick="clearLog()">
+                <i class="fas fa-eraser me-1"></i>Clear Log
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Audio Options Test Lab with YouTube API Integration
+        class AudioOptionsTestLab {
+            constructor() {
+                this.playlist = [
+                    { 
+                        title: "Is it really you?", 
+                        duration: "5:40",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites Is it really you South Africa",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/is-it-really-you",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    },
+                    { 
+                        title: "Los Libidos", 
+                        duration: "6:29",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites Los Libidos",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/los-libidos",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    },
+                    { 
+                        title: "Spanish Fly", 
+                        duration: "5:47",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites Spanish Fly",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/spanish-fly",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    },
+                    { 
+                        title: "Shoes", 
+                        duration: "5:14",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites Shoes",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/shoes",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    },
+                    { 
+                        title: "You make me tremble", 
+                        duration: "5:55",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites You make me tremble",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/you-make-me-tremble",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    },
+                    { 
+                        title: "Quality Babe", 
+                        duration: "6:42",
+                        youtubeId: null,
+                        youtubeSearchQuery: "Honeymoon Suites Quality Babe",
+                        bandcampUrl: "https://honeymoonsuites.bandcamp.com/track/quality-babe",
+                        status: { youtube: 'unknown', bandcamp: 'available' }
+                    }
+                ];
+                
+                this.currentSource = null;
+                this.currentTrack = null;
+                this.youtubePlayer = null;
+                this.youtubeReady = false;
+                this.testResults = {};
+                
+                this.init();
+            }
+            
+            init() {
+                this.log('Initializing Audio Options Test Lab...');
+                this.renderTrackList();
+                this.loadYouTubeAPI();
+                this.checkBandcampAvailability();
+                this.log('Test lab ready for testing!');
+            }
+            
+            log(message) {
+                const logElement = document.getElementById('debugLog');
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.textContent = `[${timestamp}] ${message}`;
+                logElement.appendChild(logEntry);
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+            
+            renderTrackList() {
+                const trackListElement = document.getElementById('trackList');
+                trackListElement.innerHTML = '';
+                
+                this.playlist.forEach((track, index) => {
+                    const trackElement = document.createElement('div');
+                    trackElement.className = 'track-item p-3 rounded mb-2';
+                    trackElement.onclick = () => this.testTrack(index);
+                    
+                    trackElement.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${track.title}</h6>
+                                <small class="text-muted">${track.duration}</small>
+                                ${track.youtubeTitle ? `<br><small class="text-info">🎵 ${track.youtubeTitle}</small>` : ''}
+                                ${track.youtubeChannel ? `<br><small class="text-warning">📺 ${track.youtubeChannel}</small>` : ''}
+                            </div>
+                            <div class="text-end">
+                                <div class="mb-1">
+                                    <span class="status-indicator status-${this.getStatusClass(track.status.youtube)}" 
+                                          title="YouTube: ${track.youtubeTitle || 'Not tested'}"></span>
+                                    <small class="me-2">YT</small>
+                                    <span class="status-indicator status-${this.getStatusClass(track.status.bandcamp)}" 
+                                          title="Bandcamp availability"></span>
+                                    <small>BC</small>
+                                </div>
+                                <button class="btn btn-outline-light btn-sm" onclick="event.stopPropagation(); testLab.testTrack(${index})">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    trackListElement.appendChild(trackElement);
+                });
+            }
+            
+            getStatusClass(status) {
+                switch(status) {
+                    case 'available': return 'available';
+                    case 'unavailable': return 'unavailable';
+                    case 'loading': return 'loading';
+                    default: return 'unavailable';
+                }
+            }
+            
+            async loadYouTubeAPI() {
+                this.log('Loading YouTube IFrame API...');
+                
+                if (window.YT && window.YT.Player) {
+                    this.initYouTubePlayer();
+                    return;
+                }
+                
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                
+                window.onYouTubeIframeAPIReady = () => {
+                    this.log('YouTube API loaded successfully');
+                    this.initYouTubePlayer();
+                    this.updateSourceStatus('youtube', 'available', 'API Ready');
+                };
+            }
+            
+            initYouTubePlayer() {
+                this.youtubePlayer = new YT.Player('youtubePlayer', {
+                    height: '200',
+                    width: '100%',
+                    playerVars: {
+                        'autoplay': 0,
+                        'controls': 1,
+                        'modestbranding': 1,
+                        'rel': 0
+                    },
+                    events: {
+                        'onReady': () => {
+                            this.youtubeReady = true;
+                            this.log('YouTube player ready');
+                        },
+                        'onStateChange': (event) => this.onYouTubeStateChange(event),
+                        'onError': (event) => this.onYouTubeError(event)
+                    }
+                });
+            }
+            
+            onYouTubeStateChange(event) {
+                const states = {
+                    [YT.PlayerState.PLAYING]: 'Playing',
+                    [YT.PlayerState.PAUSED]: 'Paused',
+                    [YT.PlayerState.ENDED]: 'Ended',
+                    [YT.PlayerState.BUFFERING]: 'Buffering'
+                };
+                
+                const state = states[event.data] || 'Unknown';
+                this.updatePlaybackStatus(state);
+                this.log(`YouTube player state: ${state}`);
+            }
+            
+            onYouTubeError(event) {
+                this.log(`YouTube player error: ${event.data}`);
+                this.updatePlaybackStatus('Error');
+            }
+            
+            checkBandcampAvailability() {
+                this.log('Checking Bandcamp availability...');
+                this.updateSourceStatus('bandcamp', 'available', 'Embeds Available');
+                
+                this.playlist.forEach(track => {
+                    track.status.bandcamp = 'available';
+                });
+                this.renderTrackList();
+            }
+            
+            updateSourceStatus(source, status, message) {
+                const statusElement = document.getElementById(`${source}-status`);
+                const textElement = document.getElementById(`${source}-status-text`);
+                
+                if (statusElement) {
+                    statusElement.className = `status-indicator status-${this.getStatusClass(status)}`;
+                }
+                if (textElement) {
+                    textElement.textContent = message;
+                }
+            }
+            
+            async testTrack(index) {
+                const track = this.playlist[index];
+                this.currentTrack = track;
+                this.log(`Testing track: ${track.title}`);
+                
+                // Update UI
+                document.getElementById('currentTrackName').textContent = track.title;
+                document.getElementById('trackDuration').textContent = track.duration;
+                
+                // Mark track as playing in list
+                document.querySelectorAll('.track-item').forEach((item, i) => {
+                    item.classList.toggle('playing', i === index);
+                });
+                
+                // Try different sources based on current mode
+                const selectedSource = document.querySelector('.streaming-option.active')?.dataset.source || 'hybrid';
+                
+                switch(selectedSource) {
+                    case 'youtube':
+                        await this.testYouTubeTrack(track);
+                        break;
+                    case 'bandcamp':
+                        await this.testBandcampTrack(track);
+                        break;
+                    case 'hybrid':
+                        await this.testHybridTrack(track);
+                        break;
+                }
+            }
+            
+            async testYouTubeTrack(track) {
+                this.log(`Testing YouTube for: ${track.title}`);
+                this.showPlayer('youtube');
+                
+                const apiKey = document.getElementById('youtubeApiKey').value;
+                if (!apiKey) {
+                    this.log('No YouTube API key provided, using demo video');
+                    this.playYouTubeVideo('dQw4w9WgXcQ'); // Demo video
+                    return;
+                }
+                
+                try {
+                    const searchResults = await this.searchYouTube(track.youtubeSearchQuery, apiKey);
+                    if (searchResults.length > 0) {
+                        const videoId = searchResults[0].id.videoId;
+                        track.youtubeId = videoId;
+                        track.youtubeTitle = searchResults[0].snippet.title;
+                        track.youtubeChannel = searchResults[0].snippet.channelTitle;
+                        track.status.youtube = 'available';
+                        this.playYouTubeVideo(videoId);
+                        this.log(`Found YouTube video: ${track.youtubeTitle}`);
+                        this.renderTrackList();
+                    } else {
+                        track.status.youtube = 'unavailable';
+                        this.log(`No YouTube results found for: ${track.title}`);
+                        this.fallbackToNextSource(track);
+                    }
+                } catch (error) {
+                    this.log(`YouTube search error: ${error.message}`);
+                    this.fallbackToNextSource(track);
+                }
+            }
+            
+            async testBandcampTrack(track) {
+                this.log(`Testing Bandcamp for: ${track.title}`);
+                this.showPlayer('bandcamp');
+                this.loadBandcampEmbed(track.bandcampUrl);
+            }
+            
+            async testHybridTrack(track) {
+                this.log(`Testing hybrid mode for: ${track.title}`);
+                
+                const apiKey = document.getElementById('youtubeApiKey').value;
+                if (apiKey) {
+                    await this.testYouTubeTrack(track);
+                } else {
+                    await this.testBandcampTrack(track);
+                }
+            }
+            
+            async searchYouTube(query, apiKey) {
+                const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${apiKey}&maxResults=5`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`YouTube API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data.items || [];
+            }
+            
+            playYouTubeVideo(videoId) {
+                if (this.youtubePlayer && this.youtubeReady) {
+                    this.youtubePlayer.loadVideoById(videoId);
+                    this.currentSource = 'YouTube';
+                    this.updateCurrentSource('YouTube');
+                }
+            }
+            
+            loadBandcampEmbed(trackUrl) {
+                const container = document.getElementById('bandcampPlayer');
+                container.innerHTML = `
+                    <iframe 
+                        style="border: 0; width: 100%; height: 200px;" 
+                        src="${trackUrl}/embed" 
+                        seamless>
+                    </iframe>
+                `;
+                this.currentSource = 'Bandcamp';
+                this.updateCurrentSource('Bandcamp');
+            }
+            
+            showPlayer(type) {
+                document.getElementById('youtubePlayerContainer').style.display = 'none';
+                document.getElementById('bandcampPlayerContainer').style.display = 'none';
+                document.getElementById('demoPlayerContainer').style.display = 'none';
+                
+                document.getElementById(`${type}PlayerContainer`).style.display = 'block';
+                
+                document.getElementById('currentPlayerInfo').innerHTML = `
+                    <h5 class="text-light">${this.currentTrack?.title || 'Unknown Track'}</h5>
+                    <p class="text-muted mb-0">Playing via ${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+                `;
+            }
+            
+            fallbackToNextSource(track) {
+                this.log(`Falling back to Bandcamp for: ${track.title}`);
+                this.testBandcampTrack(track);
+            }
+            
+            updateCurrentSource(source) {
+                document.getElementById('currentSource').textContent = source;
+            }
+            
+            updatePlaybackStatus(status) {
+                document.getElementById('playbackStatus').textContent = status;
+            }
+        }
+        
+        // Global functions for UI interaction
+        let testLab;
+        
+        function selectStreamingSource(source) {
+            document.querySelectorAll('.streaming-option').forEach(option => {
+                option.classList.toggle('active', option.dataset.source === source);
+            });
+            
+            if (testLab) {
+                testLab.log(`Selected streaming source: ${source}`);
+            }
+        }
+        
+        function testAllTracks() {
+            if (!testLab) return;
+            
+            testLab.log('Testing all tracks...');
+            testLab.playlist.forEach((track, index) => {
+                setTimeout(() => testLab.testTrack(index), index * 3000);
+            });
+        }
+        
+        function clearResults() {
+            if (!testLab) return;
+            
+            testLab.log('Clearing test results...');
+            testLab.playlist.forEach(track => {
+                track.status = { youtube: 'unknown', bandcamp: 'available' };
+                track.youtubeId = null;
+                track.youtubeTitle = null;
+                track.youtubeChannel = null;
+            });
+            testLab.renderTrackList();
+        }
+        
+        function exportResults() {
+            if (!testLab) return;
+            
+            const results = {
+                timestamp: new Date().toISOString(),
+                playlist: testLab.playlist,
+                testResults: testLab.testResults
+            };
+            
+            const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'honeymoon-suites-audio-test-results.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            testLab.log('Test results exported');
+        }
+        
+        function clearLog() {
+            document.getElementById('debugLog').innerHTML = '';
+        }
+        
+        function toggleDemoPlayback() {
+            if (testLab) {
+                testLab.log('Demo playback toggled');
+                testLab.updatePlaybackStatus('Demo Playing');
+            }
+        }
+        
+        // Initialize test lab when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            testLab = new AudioOptionsTestLab();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+/* Gallery Specific Styles */
+
+.track-item {
+    background: rgba(233, 69, 96, 0.1);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.track-item:hover {
+    background: rgba(233, 69, 96, 0.2);
+    border-color: #e94560;
+    transform: translateX(10px);
+}
+
+.fan-memory {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #e94560;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.concert-timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 1rem 0 1rem 3rem;
+    border-left: 2px solid #e94560;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 1.5rem;
+    width: 14px;
+    height: 14px;
+    background: #e94560;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #e94560;
+}
+
+.band-member {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Photo Placeholder Effects */
+.photo-placeholder {
+    background: linear-gradient(45deg, #e94560, #4ecdc4);
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Interactive Elements */
+.streaming-option {
+    background: rgba(233, 69, 96, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.streaming-option:hover {
+    border-color: #e94560;
+    background: rgba(233, 69, 96, 0.2);
+    transform: translateY(-2px);
+}
+
+.streaming-option.active {
+    border-color: #e94560;
+    background: rgba(233, 69, 96, 0.3);
+}
+
+/* Status Indicators */
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.status-available { background-color: #28a745; }
+.status-unavailable { background-color: #dc3545; }
+.status-loading { 
+    background-color: #ffc107; 
+    animation: pulse 1s infinite; 
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

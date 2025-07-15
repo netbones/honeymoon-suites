@@ -1,0 +1,65 @@
+/* Test Lab Specific Styles */
+
+.test-controls {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.log-output {
+    background: #000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.player-container {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 2px solid #e94560;
+    border-radius: 15px;
+    min-height: 200px;
+}
+
+.youtube-player {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bandcamp-embed {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Enhanced Test Lab Styles */
+.track-result {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.track-result:hover {
+    background: rgba(233, 69, 96, 0.1);
+    border-color: #e94560;
+}
+
+.status-found { color: #28a745; }
+.status-not-found { color: #dc3545; }
+.status-testing { color: #ffc107; }
+
+.video-preview {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+/* Extended Log Output for Enhanced Test */
+.log-output.enhanced {
+    max-height: 300px;
+}
