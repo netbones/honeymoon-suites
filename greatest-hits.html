@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greatest Hits - Kevin Parissien & The Honeymoon Suites</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glam-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .album-showcase {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+        
+        .vinyl-record {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1a1a1a, #333);
+            position: relative;
+            animation: spin 10s linear infinite;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .vinyl-record::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #1a1a1a;
+            border-radius: 50%;
+        }
+        
+        .track-item {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .track-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: #e94560;
+            transform: translateX(10px);
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(233, 69, 96, 0.9);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(233, 69, 96, 1);
+            transform: scale(1.1);
+            color: white;
+        }
+        
+        .golden-frame {
+            border: 8px solid #d4af37;
+            border-radius: 15px;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .hit-badge {
+            background: linear-gradient(45deg, #d4af37, #ffd700);
+            color: #1a1a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left me-2"></i>Back to Main Site
+    </a>
+
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5 mt-5">
+            <h1 class="display-2 glam-text mb-3">Greatest Hits</h1>
+            <h2 class="h3 text-light mb-4">Kevin Parissien & The Honeymoon Suites</h2>
+            <p class="lead text-muted">The essential collection of South African glamrock classics</p>
+        </div>
+
+        <!-- Album Showcase -->
+        <div class="album-showcase p-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center">
+                    <div class="position-relative d-inline-block">
+                        <img src="assets/firstalbum.jpeg" 
+                             alt="Greatest Hits Album Cover" 
+                             class="golden-frame"
+                             style="width: 350px; height: 350px; object-fit: cover;">
+                        <div class="vinyl-record position-absolute" style="top: -20px; right: -50px; opacity: 0.3;"></div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="p-4">
+                        <h2 class="display-4 text-danger mb-3">Greatest Hits</h2>
+                        <h4 class="text-warning mb-4">The Honeymoon Suites</h4>
+                        
+                        <div class="mb-4">
+                            <span class="hit-badge me-2">CLASSIC COLLECTION</span>
+                            <span class="hit-badge">REMASTERED</span>
+                        </div>
+                        
+                        <p class="lead text-light mb-4">
+                            A carefully curated collection of The Honeymoon Suites' most beloved tracks, 
+                            spanning their legendary career in the South African glamrock scene.
+                        </p>
+                        
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <h5 class="text-danger">15</h5>
+                                <small class="text-muted">Tracks</small>
+                            </div>
+                            <div class="col-4">
+                                <h5 class="text-danger">72:30</h5>
+                                <small class="text-muted">Runtime</small>
+                            </div>
+                            <div class="col-4">
+                                <h5 class="text-danger">1990s</h5>
+                                <small class="text-muted">Era</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Listing -->
+        <div class="album-showcase p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-list-music me-2"></i>Complete Track Listing
+            </h3>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">1. Luminous Anonymity</h6>
+                                <small class="text-muted">The breakthrough hit</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">HIT</span>
+                                <div class="text-muted small">4:32</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">2. Los Libidos</h6>
+                                <small class="text-muted">Fan favorite</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">CLASSIC</span>
+                                <div class="text-muted small">6:29</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">3. Quality Babe</h6>
+                                <small class="text-muted">Glamrock anthem</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">EPIC</span>
+                                <div class="text-muted small">6:42</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">4. Spanish Fly</h6>
+                                <small class="text-muted">Seductive groove</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">5:47</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">5. You Make Me Tremble</h6>
+                                <small class="text-muted">Emotional ballad</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">5:55</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">6. Work That Skirt</h6>
+                                <small class="text-muted">Dance floor filler</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">4:00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">7. Dr. Strangelove</h6>
+                                <small class="text-muted">Cinematic masterpiece</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">EPIC</span>
+                                <div class="text-muted small">5:46</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">8. Party In My Head</h6>
+                                <small class="text-muted">Psychedelic journey</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">6:21</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">9. Shoes</h6>
+                                <small class="text-muted">Quirky storytelling</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">5:14</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">10. Powdered Love</h6>
+                                <small class="text-muted">Romantic groove</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">5:01</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">11. Oh My God (Evil Twin)</h6>
+                                <small class="text-muted">Dark alter ego</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">3:28</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">12. Is It Really You?</h6>
+                                <small class="text-muted">Existential questioning</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">5:40</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">13. Los Libidos (Radio Mix)</h6>
+                                <small class="text-muted">Radio-friendly version</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="text-muted small">3:33</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">14. Cape Town Nights</h6>
+                                <small class="text-muted">Rare B-side</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">RARE</span>
+                                <div class="text-muted small">4:18</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-warning mb-1">15. Graceland Dreams</h6>
+                                <small class="text-muted">Hidden gem</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="hit-badge">BONUS</span>
+                                <div class="text-muted small">4:44</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Album Notes -->
+        <div class="album-showcase p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-sticky-note me-2"></i>Album Notes
+            </h3>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="p-4 bg-dark rounded">
+                        <h5 class="text-warning mb-3">About This Collection</h5>
+                        <p class="text-light mb-3">
+                            This greatest hits compilation brings together the most beloved tracks from The Honeymoon Suites' 
+                            legendary career in the South African music scene. From the breakthrough hit "Luminous Anonymity" 
+                            to the epic "Quality Babe," this collection showcases the band's unique blend of glamrock theatrics 
+                            and lounge-lizard sophistication.
+                        </p>
+                        <p class="text-light mb-3">
+                            Featuring remastered versions of classics from the "Five Star" album, plus rare B-sides and 
+                            previously unreleased tracks like "Cape Town Nights" and "Graceland Dreams," this compilation 
+                            offers both longtime fans and newcomers the definitive Honeymoon Suites experience.
+                        </p>
+                        <p class="text-light">
+                            Kevin Parissien's distinctive vocals, combined with the band's theatrical stage presence and 
+                            innovative arrangements, created a sound that was uniquely South African yet universally appealing. 
+                            This collection preserves that magic for future generations.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="p-4 bg-dark rounded">
+                        <h6 class="text-warning mb-3">Credits</h6>
+                        <ul class="list-unstyled text-light small">
+                            <li class="mb-2"><strong>Lead Vocals:</strong> Kevin Parissien</li>
+                            <li class="mb-2"><strong>Keyboards:</strong> Julie Uranium</li>
+                            <li class="mb-2"><strong>Bass & Guitar:</strong> Bood Carver</li>
+                            <li class="mb-2"><strong>Guitar:</strong> Jamie Cloete</li>
+                            <li class="mb-2"><strong>Drums:</strong> Eastern North</li>
+                            <li class="mb-2"><strong>Trumpet:</strong> Douglas Armstrong</li>
+                            <li class="mb-2"><strong>Trombone:</strong> Ampie Stander</li>
+                            <li class="mb-2"><strong>Saxophone:</strong> Chaz Singer</li>
+                        </ul>
+                        
+                        <h6 class="text-warning mb-3 mt-4">Production</h6>
+                        <ul class="list-unstyled text-light small">
+                            <li class="mb-2"><strong>Recorded at:</strong> B&S Studios</li>
+                            <li class="mb-2"><strong>Remastered:</strong> 2024</li>
+                            <li class="mb-2"><strong>Genre:</strong> Glamrock, Alternative</li>
+                            <li class="mb-2"><strong>Origin:</strong> Cape Town, South Africa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add interactive track hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackItems = document.querySelectorAll('.track-item');
+            
+            trackItems.forEach(track => {
+                track.addEventListener('click', function() {
+                    // Remove active class from all tracks
+                    trackItems.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked track
+                    this.classList.add('active');
+                    
+                    // Add some visual feedback
+                    this.style.background = 'rgba(233, 69, 96, 0.3)';
+                    setTimeout(() => {
+                        this.style.background = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
