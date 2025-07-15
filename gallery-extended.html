@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extended Gallery - Kevin Parissien & The Honeymoon Suites</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glam-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+        
+        .photo-card {
+            background: rgba(233, 69, 96, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #e94560;
+            box-shadow: 0 20px 40px rgba(233, 69, 96, 0.3);
+        }
+        
+        .vintage-frame {
+            border: 8px solid #d4af37;
+            border-radius: 10px;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .polaroid {
+            background: white;
+            padding: 15px 15px 50px 15px;
+            transform: rotate(-2deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(233, 69, 96, 0.9);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(233, 69, 96, 1);
+            transform: scale(1.1);
+            color: white;
+        }
+        
+        .album-showcase {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .track-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="fan-gallery.html" class="back-button">
+        <i class="fas fa-arrow-left me-2"></i>Back to Main Gallery
+    </a>
+
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5 mt-5">
+            <h1 class="display-2 glam-text mb-3">Extended Gallery</h1>
+            <h2 class="h3 text-light mb-4">Deep Dive into The Honeymoon Suites</h2>
+            <p class="lead text-muted">Rare photos, album details, and exclusive content</p>
+        </div>
+
+        <!-- Album Showcase Section -->
+        <div class="gallery-section p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-compact-disc me-2"></i>Five Star Album Deep Dive
+            </h3>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="album-showcase">
+                        <img src="https://i0.wp.com/f0.bcbits.com/img/a3344410603_2.jpg" 
+                             alt="Five Star Album Cover" 
+                             class="img-fluid mb-3"
+                             style="max-width: 300px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"
+                             onclick="openLightbox('album-large')">
+                        <h4 class="text-danger">Five Star</h4>
+                        <p class="text-light">The Honeymoon Suites</p>
+                        <p class="text-muted">Click to view full size</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="track-list">
+                        <h5 class="text-warning mb-3">Complete Track Listing</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ol class="text-light">
+                                    <li>Is it really you? <span class="text-muted">(5:40)</span></li>
+                                    <li>Los Libidos <span class="text-muted">(6:29)</span></li>
+                                    <li>Spanish Fly <span class="text-muted">(5:47)</span></li>
+                                    <li>Shoes <span class="text-muted">(5:14)</span></li>
+                                    <li>You make me tremble <span class="text-muted">(5:55)</span></li>
+                                    <li>Quality Babe <span class="text-muted">(6:42)</span></li>
+                                </ol>
+                            </div>
+                            <div class="col-md-6">
+                                <ol class="text-light" start="7">
+                                    <li>Powdered Love <span class="text-muted">(5:01)</span></li>
+                                    <li>Oh my God (Evil twin) <span class="text-muted">(3:28)</span></li>
+                                    <li>Work that skirt <span class="text-muted">(4:00)</span></li>
+                                    <li>Dr. Strangelove <span class="text-muted">(5:46)</span></li>
+                                    <li>Party in my head <span class="text-muted">(6:21)</span></li>
+                                    <li>Los Libidos (Radio Mix) <span class="text-muted">(3:33)</span></li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-dark rounded">
+                            <h6 class="text-danger">Album Details</h6>
+                            <p class="small text-muted mb-1"><strong>Total Runtime:</strong> 66 minutes, 16 seconds</p>
+                            <p class="small text-muted mb-1"><strong>Genre:</strong> Glamrock, Alternative Rock, Lounge</p>
+                            <p class="small text-muted mb-1"><strong>Recorded at:</strong> B&S Studios</p>
+                            <p class="small text-muted mb-0"><strong>Era:</strong> 1990s South African Music Scene</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rare Photos Section -->
+        <div class="gallery-section p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-camera-retro me-2"></i>Rare & Unseen Photos
+            </h3>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="photo-card p-3 polaroid" onclick="openLightbox('rare1')">
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="https://helenakingwill.com/wp-content/uploads/2017/09/honeymoons-2-e1504873114287.jpg" 
+                                 alt="Band Group Photo - High Resolution" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                        </div>
+                        <div class="text-center mt-3">
+                            <h6 class="text-dark">Original Band Lineup</h6>
+                            <small class="text-muted">High Resolution Version</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="photo-card p-3 polaroid" onclick="openLightbox('rare2')">
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg" 
+                                 alt="Bood Carver Portrait" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                        </div>
+                        <div class="text-center mt-3">
+                            <h6 class="text-dark">Bood Carver</h6>
+                            <small class="text-muted">Tribute Photo</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="photo-card p-3 polaroid" onclick="openLightbox('rare3')">
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="https://helenakingwill.com/wp-content/uploads/2017/09/folk-me-e1504904542828.jpg" 
+                                 alt="Folk Me Band" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                        </div>
+                        <div class="text-center mt-3">
+                            <h6 class="text-dark">Folk Me Era</h6>
+                            <small class="text-muted">Later Project</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Studio & Recording Section -->
+        <div class="gallery-section p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-microphone me-2"></i>Studio & Recording
+            </h3>
+            
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="photo-card p-4">
+                        <div style="height: 250px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #1a1a2e, #16213e); border: 2px solid #d4af37; border-radius: 10px;">
+                            <div class="text-center text-white">
+                                <i class="fas fa-recording-vinyl fa-4x mb-3 text-warning"></i>
+                                <h4>B&S Studios</h4>
+                                <p class="lead">Where the Magic Happened</p>
+                                <p class="small text-muted">Recording sessions for the Five Star album</p>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h6 class="text-danger">Recording Process</h6>
+                            <p class="small text-muted">The band recorded their definitive album "Five Star" at B&S Studios, capturing their unique blend of glamrock and lounge-lizard schmaltz.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="photo-card p-4">
+                        <div style="height: 250px; overflow: hidden;">
+                            <img src="https://helenakingwill.com/wp-content/uploads/2017/09/cimg1891.jpg" 
+                                 alt="Angels on Horseback Performance" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                        </div>
+                        <div class="p-3">
+                            <h6 class="text-danger">Angels on Horseback</h6>
+                            <p class="small text-muted">Award-winning cowboy-cabaret show featuring band members in their later theatrical endeavors.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Archive Section -->
+        <div class="gallery-section p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-video me-2"></i>Video Archive
+            </h3>
+            
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="photo-card p-3">
+                        <iframe width="100%" height="250" 
+                                src="https://www.youtube.com/embed/v8_JU3X3UlM" 
+                                title="Luminous Anonymity - Official Video" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                style="border-radius: 10px;">
+                        </iframe>
+                        <div class="p-3">
+                            <h6 class="text-danger">Luminous Anonymity</h6>
+                            <p class="small text-muted">Official music video shot by Majita Films with 25-person crew working for free on Workers' Day</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="photo-card p-3">
+                        <iframe width="100%" height="250" 
+                                src="https://www.youtube.com/embed/RO79b9ggbnE" 
+                                title="Luminous Anonymity - Live Performance" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                style="border-radius: 10px;">
+                        </iframe>
+                        <div class="p-3">
+                            <h6 class="text-danger">Live Performance</h6>
+                            <p class="small text-muted">Rare live footage showing the band's theatrical stage presence and musical prowess</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Context Section -->
+        <div class="gallery-section p-4">
+            <h3 class="text-danger mb-4">
+                <i class="fas fa-history me-2"></i>Historical Context
+            </h3>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="p-4 bg-dark rounded">
+                        <h5 class="text-warning mb-3">The 1990s Cape Town Scene</h5>
+                        <p class="text-light mb-3">
+                            The Honeymoon Suites emerged during a pivotal time in South African music history. Cape Town was becoming "the new crucible of white South African rock," as described by the Mail & Guardian in 1998.
+                        </p>
+                        <p class="text-light mb-3">
+                            The band's theatrical approach and glamrock aesthetic stood out in a scene that was evolving beyond traditional rock boundaries. Their performances at venues like The Magnet, The Lounge, and the "kitsch" Graceland became legendary.
+                        </p>
+                        <p class="text-light">
+                            The Klein Karoo Festival residency at the old casino behind a butchery became the stuff of legend, with fans dancing on tables and the band changing costumes every night.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="p-4 bg-dark rounded">
+                        <h6 class="text-warning mb-3">Key Venues</h6>
+                        <ul class="list-unstyled text-light">
+                            <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>The Magnet</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>The Lounge</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Graceland</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Oudtshoorn Casino</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>B&S Studios</li>
+                        </ul>
+                        
+                        <h6 class="text-warning mb-3 mt-4">Era</h6>
+                        <p class="text-light small">1990s South African Glamrock Renaissance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+            <div id="lightboxImage"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Lightbox functionality
+        function openLightbox(imageId) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            const imageData = {
+                'album-large': {
+                    title: 'Five Star Album Cover',
+                    image: 'https://i0.wp.com/f0.bcbits.com/img/a3344410603_2.jpg',
+                    description: 'The complete Five Star album artwork in high resolution',
+                    details: 'Official album cover from Bandcamp featuring the distinctive Honeymoon Suites aesthetic'
+                },
+                'rare1': {
+                    title: 'Original Band Lineup',
+                    image: 'https://helenakingwill.com/wp-content/uploads/2017/09/honeymoons-2-e1504873114287.jpg',
+                    description: 'Complete band photo showing all original members',
+                    details: 'From top: Douglas Armstrong, Julia Raynam, Eddie Boyd, Eastern North, Bood Carver, Kevin Parissien, Jamie Jupiter'
+                },
+                'rare2': {
+                    title: 'Bood Carver - Bass & Guitar',
+                    image: 'https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg',
+                    description: 'Portrait of Julian "Bood" Carver',
+                    details: 'Songwriter since age 7, influenced by 70s classics like Bee Gees and ABBA. Scorpio who brought rhythmic foundation to the band.'
+                },
+                'rare3': {
+                    title: 'Folk Me - Later Project',
+                    image: 'https://helenakingwill.com/wp-content/uploads/2017/09/folk-me-e1504904542828.jpg',
+                    description: 'Folk Me band featuring Bood Carver and Jamie',
+                    details: 'Later musical project that was about to be revived before Bood\'s passing'
+                }
+            };
+            
+            const data = imageData[imageId];
+            if (data) {
+                lightboxImage.innerHTML = `
+                    <div class="text-center">
+                        <img src="${data.image}" 
+                             alt="${data.title}" 
+                             style="max-width: 100%; max-height: 80vh; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.8);">
+                        <div class="mt-4 p-4 bg-dark rounded">
+                            <h4 class="text-danger mb-3">${data.title}</h4>
+                            <p class="text-light mb-3">${data.description}</p>
+                            <p class="text-muted">${data.details}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            lightbox.classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
