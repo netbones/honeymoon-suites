@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/gallery.css" rel="stylesheet">
+    <link href="css/transitions.css" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
@@ -248,8 +249,8 @@
                 
                 <div class="col-lg-4 col-md-6">
                     <div class="photo-card p-3" onclick="openLightbox('band2')">
-                        <div class="vintage-frame" style="height: 250px; overflow: hidden;">
-                            <img src="assets/5star.jpeg" 
+                        <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                            <img data-src="assets/5star.jpeg" 
                                  alt="Five Star Album Cover" 
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;"
                                  onclick="window.open('gallery-extended.html', '_blank')">
@@ -264,8 +265,8 @@
                 
                 <div class="col-lg-4 col-md-6">
                     <div class="photo-card p-3" onclick="openLightbox('band3')">
-                        <div class="vintage-frame" style="height: 250px; overflow: hidden;">
-                            <img src="https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg" 
+                        <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                            <img data-src="https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg" 
                                  alt="Bood Carver" 
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
                         </div>
@@ -486,6 +487,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/transitions.js"></script>
     <script src="js/common.js"></script>
     <script src="js/gallery.js"></script>
     <script>
