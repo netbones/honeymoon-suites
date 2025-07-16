@@ -172,6 +172,99 @@
             font-size: 2rem;
             cursor: pointer;
         }
+        
+        /* Swipeable Filter Styles */
+        .swipeable-filters-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 10px 0;
+            margin: 0 -15px;
+        }
+        
+        .swipeable-filters-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .swipeable-filters {
+            display: flex;
+            gap: 15px;
+            padding: 0 15px;
+            min-width: max-content;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            padding: 12px 20px;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+        
+        .filter-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .filter-btn span {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(45deg, rgba(233, 69, 96, 0.8), rgba(233, 69, 96, 0.6));
+            border-color: #e94560;
+            color: white;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn[data-filter="band"]:hover,
+        .filter-btn[data-filter="band"].active {
+            border-color: #e94560;
+        }
+        
+        .filter-btn[data-filter="concerts"]:hover,
+        .filter-btn[data-filter="concerts"].active {
+            border-color: #17a2b8;
+        }
+        
+        .filter-btn[data-filter="backstage"]:hover,
+        .filter-btn[data-filter="backstage"].active {
+            border-color: #ffc107;
+        }
+        
+        .swipe-indicator {
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+        
+        /* Hide swipe indicator after first interaction */
+        .swipeable-filters-container.interacted + .swipe-indicator {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Smooth scrolling for swipe */
+        .swipeable-filters-container {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body>
@@ -194,20 +287,33 @@
             <h1 class="display-2 glam-text mb-3">Fan Gallery</h1>
             <h2 class="h3 text-light mb-4">Kevin Parissien & The Honeymoon Suites</h2>
             <p class="lead text-muted">A visual journey through the glamrock legend</p>
-            <!-- Mobile-friendly filter buttons -->
-            <div class="d-flex justify-content-center flex-wrap gap-2 mt-4 d-lg-none">
-                <button class="btn btn-outline-light btn-sm" onclick="filterGallery('all')">
-                    <i class="fas fa-th me-1"></i>All
-                </button>
-                <button class="btn btn-outline-danger btn-sm" onclick="filterGallery('band')">
-                    <i class="fas fa-users me-1"></i>Band
-                </button>
-                <button class="btn btn-outline-info btn-sm" onclick="filterGallery('concerts')">
-                    <i class="fas fa-music me-1"></i>Concerts
-                </button>
-                <button class="btn btn-outline-warning btn-sm" onclick="filterGallery('backstage')">
-                    <i class="fas fa-camera me-1"></i>Backstage
-                </button>
+            <!-- Mobile-friendly swipeable filter buttons -->
+            <div class="d-lg-none mt-4">
+                <div class="swipeable-filters-container">
+                    <div class="swipeable-filters" id="swipeableFilters">
+                        <button class="filter-btn active" data-filter="all" onclick="filterGallery('all')">
+                            <i class="fas fa-th"></i>
+                            <span>All</span>
+                        </button>
+                        <button class="filter-btn" data-filter="band" onclick="filterGallery('band')">
+                            <i class="fas fa-users"></i>
+                            <span>Band</span>
+                        </button>
+                        <button class="filter-btn" data-filter="concerts" onclick="filterGallery('concerts')">
+                            <i class="fas fa-music"></i>
+                            <span>Concerts</span>
+                        </button>
+                        <button class="filter-btn" data-filter="backstage" onclick="filterGallery('backstage')">
+                            <i class="fas fa-camera"></i>
+                            <span>Backstage</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="swipe-indicator">
+                    <small class="text-muted">
+                        <i class="fas fa-hand-pointer me-1"></i>Swipe to see more filters
+                    </small>
+                </div>
             </div>
             <!-- Desktop filter buttons -->
             <div class="d-none d-lg-flex justify-content-center gap-3 mt-4">
@@ -504,13 +610,96 @@
                 }
             });
             
-            // Update active button
+            // Update active button for desktop
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.classList.remove('btn-danger');
                 btn.classList.add('btn-outline-light');
             });
-            event.target.classList.remove('btn-outline-light');
-            event.target.classList.add('btn-danger');
+            if (event && event.target) {
+                event.target.classList.remove('btn-outline-light');
+                event.target.classList.add('btn-danger');
+            }
+            
+            // Update active button for mobile swipeable filters
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`[data-filter="${category}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+        
+        // Swipeable filters functionality
+        function initSwipeableFilters() {
+            const container = document.querySelector('.swipeable-filters-container');
+            if (!container) return;
+            
+            let isScrolling = false;
+            let startX = 0;
+            let scrollLeft = 0;
+            
+            // Touch events for mobile swiping
+            container.addEventListener('touchstart', (e) => {
+                isScrolling = true;
+                startX = e.touches[0].pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+                container.classList.add('interacted');
+            });
+            
+            container.addEventListener('touchmove', (e) => {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - container.offsetLeft;
+                const walk = (x - startX) * 2;
+                container.scrollLeft = scrollLeft - walk;
+            });
+            
+            container.addEventListener('touchend', () => {
+                isScrolling = false;
+            });
+            
+            // Mouse events for desktop testing
+            container.addEventListener('mousedown', (e) => {
+                isScrolling = true;
+                container.style.cursor = 'grabbing';
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+                container.classList.add('interacted');
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                isScrolling = false;
+                container.style.cursor = 'grab';
+            });
+            
+            container.addEventListener('mouseup', () => {
+                isScrolling = false;
+                container.style.cursor = 'grab';
+            });
+            
+            container.addEventListener('mousemove', (e) => {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2;
+                container.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Hide swipe indicator after first scroll
+            container.addEventListener('scroll', () => {
+                container.classList.add('interacted');
+            });
+            
+            // Auto-scroll to active filter
+            const activeFilter = container.querySelector('.filter-btn.active');
+            if (activeFilter) {
+                activeFilter.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest', 
+                    inline: 'center' 
+                });
+            }
         }
         
         // Lightbox functionality
@@ -658,6 +847,9 @@
         
         // Add some interactive animations
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize swipeable filters
+            initSwipeableFilters();
+            
             // Animate photo cards on scroll
             const observerOptions = {
                 threshold: 0.1,
