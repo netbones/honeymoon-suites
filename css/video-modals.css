@@ -1,0 +1,133 @@
+/* Video Modal and Live Performances Styling */
+
+/* Hero background styling */
+.hero-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+}
+
+/* Video card hover effects */
+.video-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.video-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+}
+
+/* Live performances card hover effects */
+.live-performances-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.live-performances-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+}
+
+/* Video thumbnail styling */
+.video-thumbnail {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.video-thumbnail:hover {
+    transform: scale(1.02);
+}
+
+.video-thumbnail .ratio {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-thumbnail:hover .ratio {
+    border-color: rgba(233, 69, 96, 0.5);
+}
+
+/* Play button hover effects */
+.video-thumbnail .fa-play-circle {
+    transition: all 0.3s ease;
+}
+
+.video-thumbnail:hover .fa-play-circle {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px currentColor);
+}
+
+/* Modal styling improvements */
+.modal-content.bg-dark {
+    background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+}
+
+.modal-header.border-danger,
+.modal-footer.border-danger {
+    border-color: rgba(233, 69, 96, 0.3) !important;
+}
+
+/* Performance card styling */
+.card.bg-gray-800 {
+    background: rgba(31, 41, 55, 0.8) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.card.bg-gray-800:hover {
+    background: rgba(31, 41, 55, 0.9) !important;
+    transform: translateY(-2px);
+}
+
+/* Badge styling */
+.badge.bg-danger {
+    background: linear-gradient(45deg, #e94560, #ff6b6b) !important;
+}
+
+.badge.bg-purple-400 {
+    background: linear-gradient(45deg, #a855f7, #c084fc) !important;
+}
+
+.badge.bg-blue-400 {
+    background: linear-gradient(45deg, #60a5fa, #93c5fd) !important;
+}
+
+.badge.bg-green-400 {
+    background: linear-gradient(45deg, #4ade80, #86efac) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .video-card,
+    .live-performances-card {
+        margin-bottom: 1rem;
+    }
+    
+    .video-card:hover,
+    .live-performances-card:hover {
+        transform: scale(1.01);
+    }
+    
+    .modal-dialog.modal-xl {
+        margin: 0.5rem;
+    }
+    
+    .card.bg-gray-800 {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .video-thumbnail .fa-play-circle {
+        font-size: 3rem !important;
+    }
+    
+    .modal-body .row.g-4 {
+        gap: 1rem !important;
+    }
+    
+    .card-body {
+        padding: 1rem !important;
+    }
+}
