@@ -364,11 +364,20 @@
             <h2 class="display-4 text-center glam-text mb-5">Gallery</h2>
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
-                    <div class="card bg-dark border-danger">
+                    <div class="card bg-dark border-danger live-performances-card" style="cursor: pointer; transition: all 0.3s ease;" onclick="openLivePerformancesModal()" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 30px rgba(233, 69, 96, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
                         <div class="card-body text-center">
                             <i class="fas fa-camera fa-4x text-danger mb-3"></i>
-                            <h5 class="card-title text-danger">Live Performances</h5>
+                            <h5 class="card-title text-danger">Live Performances
+                                <span class="badge bg-danger ms-2">
+                                    <i class="fas fa-play"></i> Watch
+                                </span>
+                            </h5>
                             <p class="card-text">Theatrical stage shows with costume changes every night</p>
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-mouse-pointer me-1"></i>Click to view live performance playlist
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -581,6 +590,166 @@
         </div>
     </div>
 
+    <!-- Live Performances Modal -->
+    <div class="modal fade" id="livePerformancesModal" tabindex="-1" aria-labelledby="livePerformancesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content bg-dark border-danger">
+                <div class="modal-header border-danger">
+                    <h5 class="modal-title text-danger" id="livePerformancesModalLabel">
+                        <i class="fas fa-camera me-2"></i>Live Performances - The Honeymoon Suites
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <!-- Klein Karoo Festival Performance -->
+                        <div class="col-lg-6">
+                            <div class="card bg-gray-800 border-danger h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-star text-yellow-400 me-2"></i>
+                                        <h6 class="card-title text-danger mb-0">Klein Karoo Festival - Legendary Week</h6>
+                                    </div>
+                                    <div class="video-thumbnail mb-3" style="position: relative; cursor: pointer;" onclick="playLiveVideo('klein-karoo')">
+                                        <div class="ratio ratio-16x9 bg-gray-700 rounded">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center">
+                                                    <i class="fas fa-play-circle fa-4x text-danger mb-2"></i>
+                                                    <p class="text-white mb-0">Klein Karoo Festival</p>
+                                                    <small class="text-muted">Behind the butchery performance</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-text small text-muted">
+                                        The legendary week-long residency at an old casino behind a butchery. 
+                                        Costume changes every night, collaborations with Jo'burg township musicians.
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>45 min performance
+                                        </small>
+                                        <span class="badge bg-danger">Featured</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cape Town Club Performance -->
+                        <div class="col-lg-6">
+                            <div class="card bg-gray-800 border-purple-400 h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-music text-purple-400 me-2"></i>
+                                        <h6 class="card-title text-purple-400 mb-0">Cape Town Club Show</h6>
+                                    </div>
+                                    <div class="video-thumbnail mb-3" style="position: relative; cursor: pointer;" onclick="playLiveVideo('cape-town')">
+                                        <div class="ratio ratio-16x9 bg-gray-700 rounded">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center">
+                                                    <i class="fas fa-play-circle fa-4x text-purple-400 mb-2"></i>
+                                                    <p class="text-white mb-0">Cape Town Club</p>
+                                                    <small class="text-muted">Intimate venue performance</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-text small text-muted">
+                                        Intimate club performance showcasing the band's theatrical stage presence 
+                                        and Kevin's magnetic charisma in a smaller venue setting.
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>32 min set
+                                        </small>
+                                        <span class="badge bg-purple-400">Live</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Luminous Anonymity Live -->
+                        <div class="col-lg-6">
+                            <div class="card bg-gray-800 border-blue-400 h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-video text-blue-400 me-2"></i>
+                                        <h6 class="card-title text-blue-400 mb-0">Luminous Anonymity - Live</h6>
+                                    </div>
+                                    <div class="video-thumbnail mb-3" style="position: relative; cursor: pointer;" onclick="playLiveVideo('luminous-live')">
+                                        <div class="ratio ratio-16x9 bg-gray-700 rounded">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center">
+                                                    <i class="fas fa-play-circle fa-4x text-blue-400 mb-2"></i>
+                                                    <p class="text-white mb-0">Luminous Anonymity</p>
+                                                    <small class="text-muted">Live performance version</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-text small text-muted">
+                                        Live performance of their breakthrough hit "Luminous Anonymity" 
+                                        featuring the sci-fi costumes and theatrical staging.
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>6 min song
+                                        </small>
+                                        <span class="badge bg-blue-400">Hit Song</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Festival Compilation -->
+                        <div class="col-lg-6">
+                            <div class="card bg-gray-800 border-green-400 h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-users text-green-400 me-2"></i>
+                                        <h6 class="card-title text-green-400 mb-0">Festival Highlights Reel</h6>
+                                    </div>
+                                    <div class="video-thumbnail mb-3" style="position: relative; cursor: pointer;" onclick="playLiveVideo('festival-highlights')">
+                                        <div class="ratio ratio-16x9 bg-gray-700 rounded">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center">
+                                                    <i class="fas fa-play-circle fa-4x text-green-400 mb-2"></i>
+                                                    <p class="text-white mb-0">Festival Highlights</p>
+                                                    <small class="text-muted">Best moments compilation</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-text small text-muted">
+                                        Compilation of the best moments from various festival performances, 
+                                        showcasing fan interactions and the band's legendary stage presence.
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>25 min compilation
+                                        </small>
+                                        <span class="badge bg-green-400">Compilation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-danger">
+                    <div class="text-start flex-grow-1">
+                        <p class="mb-1 text-white">
+                            <strong>Live Performance Archive</strong> - The Honeymoon Suites
+                        </p>
+                        <small class="text-muted">
+                            Theatrical stage shows featuring costume changes, guest musicians, and unforgettable fan interactions
+                        </small>
+                    </div>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/transitions.js"></script>
     <script src="js/common.js"></script>
@@ -673,6 +842,91 @@
                     </iframe>
                 </div>
             `;
+        }
+        
+        // Live Performances Modal Functions
+        function openLivePerformancesModal() {
+            const liveModal = new bootstrap.Modal(document.getElementById('livePerformancesModal'));
+            liveModal.show();
+            
+            // Pause music player if it's playing
+            if (window.player && window.player.isPlaying) {
+                window.player.pause();
+            }
+        }
+        
+        // Play specific live video
+        function playLiveVideo(videoType) {
+            // Define video URLs for different performances
+            const liveVideos = {
+                'klein-karoo': {
+                    title: 'Klein Karoo Festival - Legendary Week',
+                    url: 'https://www.youtube.com/embed/v8_JU3X3UlM?autoplay=1&rel=0&modestbranding=1', // Placeholder
+                    description: 'The legendary week-long residency at an old casino behind a butchery'
+                },
+                'cape-town': {
+                    title: 'Cape Town Club Show',
+                    url: 'https://www.youtube.com/embed/v8_JU3X3UlM?autoplay=1&rel=0&modestbranding=1', // Placeholder
+                    description: 'Intimate club performance showcasing theatrical stage presence'
+                },
+                'luminous-live': {
+                    title: 'Luminous Anonymity - Live Performance',
+                    url: 'https://www.youtube.com/embed/v8_JU3X3UlM?autoplay=1&rel=0&modestbranding=1', // Placeholder
+                    description: 'Live performance featuring sci-fi costumes and theatrical staging'
+                },
+                'festival-highlights': {
+                    title: 'Festival Highlights Reel',
+                    url: 'https://www.youtube.com/embed/v8_JU3X3UlM?autoplay=1&rel=0&modestbranding=1', // Placeholder
+                    description: 'Best moments from various festival performances'
+                }
+            };
+            
+            const video = liveVideos[videoType];
+            if (!video) return;
+            
+            // Close live performances modal
+            const liveModal = bootstrap.Modal.getInstance(document.getElementById('livePerformancesModal'));
+            if (liveModal) {
+                liveModal.hide();
+            }
+            
+            // Open video modal with the selected performance
+            setTimeout(() => {
+                // Update video modal title
+                document.getElementById('videoModalLabel').innerHTML = `
+                    <i class="fas fa-camera me-2"></i>${video.title}
+                `;
+                
+                // Update video modal description
+                const modalFooter = document.querySelector('#videoModal .modal-footer .text-start');
+                modalFooter.innerHTML = `
+                    <p class="mb-1 text-white">
+                        <strong>${video.title}</strong> - The Honeymoon Suites
+                    </p>
+                    <small class="text-muted">
+                        ${video.description}
+                    </small>
+                `;
+                
+                // Show video modal
+                const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+                videoModal.show();
+                
+                // Load the video
+                setTimeout(() => {
+                    const videoContainer = document.getElementById('videoPlayer');
+                    videoContainer.innerHTML = `
+                        <div class="ratio ratio-16x9">
+                            <iframe src="${video.url}" 
+                                    title="${video.title}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    `;
+                }, 300);
+            }, 300);
         }
         
         // Clean up video when modal is closed
