@@ -1,0 +1,168 @@
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .tribute-hero {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.9), rgba(16, 33, 62, 0.9)), 
+                        url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3') center/cover;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .tribute-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .tribute-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .album-artwork {
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+        
+        .album-artwork:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(233, 69, 96, 0.4);
+        }
+        
+        .bandcamp-player {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tribute-section {
+            padding: 80px 0;
+        }
+        
+        .quote-card {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(16, 33, 62, 0.2));
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 80px;
+            color: rgba(233, 69, 96, 0.3);
+            font-family: serif;
+        }
+        
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #e94560;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(233, 69, 96, 0.1);
+            transform: translateX(10px);
+        }
+        
+        .musical-influence {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .musical-influence:hover {
+            background: rgba(233, 69, 96, 0.1);
+            border-color: rgba(233, 69, 96, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .stats-card {
+            background: linear-gradient(45deg, rgba(233, 69, 96, 0.2), rgba(16, 33, 62, 0.3));
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+        
+        .stats-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e94560;
+            display: block;
+        }
+        
+        .legacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .legacy-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .legacy-card:hover {
+            background: rgba(233, 69, 96, 0.1);
+            border-color: rgba(233, 69, 96, 0.3);
+            transform: translateY(-10px);
+        }
+        
+        .memorial-quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            text-align: center;
+            color: #e94560;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .tribute-hero {
+                min-height: 50vh;
+                text-align: center;
+            }
+            
+            .bandcamp-player {
+                padding: 15px;
+                margin-top: 30px;
+            }
+            
+            .stats-number {
+                font-size: 2rem;
+            }
+        }
