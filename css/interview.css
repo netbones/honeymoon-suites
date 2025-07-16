@@ -10,7 +10,218 @@
             backdrop-filter: blur(10px);
             border-radius: 15px;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* Fireworks Animation Container */
+        .fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .interview-header .content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Firework Particles */
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework-burst 2s ease-out infinite;
+        }
+        
+        /* Big Explosion Fireworks */
+        .firework.big-explosion {
+            width: 8px;
+            height: 8px;
+            animation: big-explosion 3s ease-out infinite;
+        }
+        
+        .firework.mega-explosion {
+            width: 12px;
+            height: 12px;
+            animation: mega-explosion 4s ease-out infinite;
+        }
+        
+        .firework.gold {
+            background: radial-gradient(circle, #ffd700, #ffb300);
+            box-shadow: 0 0 10px #ffd700;
+        }
+        
+        .firework.red {
+            background: radial-gradient(circle, #ff6b6b, #e94560);
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .firework.blue {
+            background: radial-gradient(circle, #4ecdc4, #45b7d1);
+            box-shadow: 0 0 10px #4ecdc4;
+        }
+        
+        .firework.purple {
+            background: radial-gradient(circle, #a8e6cf, #96ceb4);
+            box-shadow: 0 0 10px #a8e6cf;
+        }
+        
+        .firework.pink {
+            background: radial-gradient(circle, #ff8a95, #ffeaa7);
+            box-shadow: 0 0 10px #ff8a95;
+        }
+        
+        /* Firework Burst Animation */
+        @keyframes firework-burst {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Big Explosion Animation */
+        @keyframes big-explosion {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+                box-shadow: 0 0 0px currentColor;
+            }
+            25% {
+                transform: scale(2) rotate(90deg);
+                opacity: 1;
+                box-shadow: 0 0 30px currentColor;
+            }
+            50% {
+                transform: scale(4) rotate(180deg);
+                opacity: 0.9;
+                box-shadow: 0 0 50px currentColor;
+            }
+            75% {
+                transform: scale(6) rotate(270deg);
+                opacity: 0.6;
+                box-shadow: 0 0 70px currentColor;
+            }
+            100% {
+                transform: scale(8) rotate(360deg);
+                opacity: 0;
+                box-shadow: 0 0 100px currentColor;
+            }
+        }
+        
+        /* Mega Explosion Animation */
+        @keyframes mega-explosion {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+                box-shadow: 0 0 0px currentColor;
+            }
+            20% {
+                transform: scale(3) rotate(72deg);
+                opacity: 1;
+                box-shadow: 0 0 40px currentColor;
+            }
+            40% {
+                transform: scale(6) rotate(144deg);
+                opacity: 0.95;
+                box-shadow: 0 0 80px currentColor;
+            }
+            60% {
+                transform: scale(9) rotate(216deg);
+                opacity: 0.8;
+                box-shadow: 0 0 120px currentColor;
+            }
+            80% {
+                transform: scale(12) rotate(288deg);
+                opacity: 0.5;
+                box-shadow: 0 0 160px currentColor;
+            }
+            100% {
+                transform: scale(15) rotate(360deg);
+                opacity: 0;
+                box-shadow: 0 0 200px currentColor;
+            }
+        }
+        
+        /* Sparkle Effects */
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Floating Particles */
+        .floating-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float-up 4s ease-out infinite;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100px) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(80px) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Staggered Animation Delays */
+        .firework:nth-child(1) { animation-delay: 0s; }
+        .firework:nth-child(2) { animation-delay: 0.3s; }
+        .firework:nth-child(3) { animation-delay: 0.6s; }
+        .firework:nth-child(4) { animation-delay: 0.9s; }
+        .firework:nth-child(5) { animation-delay: 1.2s; }
+        .firework:nth-child(6) { animation-delay: 1.5s; }
+        
+        .sparkle:nth-child(odd) { animation-delay: 0.5s; }
+        .sparkle:nth-child(even) { animation-delay: 1s; }
+        
+        .floating-particle:nth-child(1) { animation-delay: 0s; left: 10%; }
+        .floating-particle:nth-child(2) { animation-delay: 1s; left: 30%; }
+        .floating-particle:nth-child(3) { animation-delay: 2s; left: 50%; }
+        .floating-particle:nth-child(4) { animation-delay: 3s; left: 70%; }
+        .floating-particle:nth-child(5) { animation-delay: 0.5s; left: 90%; }
         
         .interview-section {
             background: rgba(255, 255, 255, 0.05);
