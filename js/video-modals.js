@@ -146,27 +146,35 @@ function playLiveVideo(videoType) {
     }, 300);
 }
 
+// Export functions for global access immediately
+if (typeof window !== 'undefined') {
+    window.openVideoModal = openVideoModal;
+    window.openLivePerformancesModal = openLivePerformancesModal;
+    window.playLiveVideo = playLiveVideo;
+    
+    // Debug logging
+    console.log('Video modals functions loaded successfully');
+}
+
 // Clean up video when modal is closed
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
-        if (videoPlayer) {
-            try {
-                videoPlayer.pause();
-                videoPlayer.destroy();
-            } catch (error) {
-                console.log('Error destroying player:', error);
+    const videoModal = document.getElementById('videoModal');
+    if (videoModal) {
+        videoModal.addEventListener('hidden.bs.modal', function () {
+            if (videoPlayer) {
+                try {
+                    videoPlayer.pause();
+                    videoPlayer.destroy();
+                } catch (error) {
+                    console.log('Error destroying player:', error);
+                }
+                videoPlayer = null;
             }
-            videoPlayer = null;
-        }
-        // Also clear the container in case of iframe fallback
-        const videoContainer = document.getElementById('videoPlayer');
-        if (videoContainer) {
-            videoContainer.innerHTML = '';
-        }
-    });
+            // Also clear the container in case of iframe fallback
+            const videoContainer = document.getElementById('videoPlayer');
+            if (videoContainer) {
+                videoContainer.innerHTML = '';
+            }
+        });
+    }
 });
-
-// Export functions for global access
-window.openVideoModal = openVideoModal;
-window.openLivePerformancesModal = openLivePerformancesModal;
-window.playLiveVideo = playLiveVideo;

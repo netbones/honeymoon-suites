@@ -9,6 +9,7 @@
     <link href="css/common.css" rel="stylesheet">
     <link href="css/music-player.css" rel="stylesheet">
     <link href="css/transitions.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
@@ -119,14 +120,11 @@
     </style>
 </head>
 <body>
-    <!-- Back Button -->
-    <a href="index.html" class="back-button">
-        <i class="fas fa-arrow-left me-2"></i>Back to Main Site
-    </a>
+    <!-- Navbar will be inserted here by navbar-include.js -->
 
-    <div class="container py-5">
+    <div class="container py-5 navbar-page-content">
         <!-- Header -->
-        <div class="text-center mb-5 mt-5">
+        <div class="text-center mb-5">
             <h1 class="display-2 glam-text mb-3">Greatest Hits</h1>
             <h2 class="h3 text-light mb-4">Kevin Parissien & The Honeymoon Suites</h2>
             <p class="lead text-muted">The essential collection of South African glamrock classics</p>
@@ -435,6 +433,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="components/navbar-include.js"></script>
     <script src="js/transitions.js"></script>
     <script src="js/common.js"></script>
     <script>
