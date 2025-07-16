@@ -16,6 +16,9 @@
             color: white;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
+            /* Global touch highlight removal */
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
         
         .glam-text {
@@ -171,6 +174,21 @@
             color: white;
             font-size: 2rem;
             cursor: pointer;
+        }
+        
+        /* Global touch highlight removal for all interactive elements */
+        *, *::before, *::after {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+        }
+        
+        button, a, [onclick], [role="button"] {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         /* Swipeable Filter Styles */
@@ -695,7 +713,9 @@
                 startX = e.touches[0].pageX - container.offsetLeft;
                 scrollLeft = container.scrollLeft;
                 container.classList.add('interacted');
-            });
+                // Prevent any default touch behaviors
+                e.preventDefault();
+            }, { passive: false });
             
             container.addEventListener('touchmove', (e) => {
                 if (!isScrolling) return;
@@ -703,7 +723,7 @@
                 const x = e.touches[0].pageX - container.offsetLeft;
                 const walk = (x - startX) * 2;
                 container.scrollLeft = scrollLeft - walk;
-            });
+            }, { passive: false });
             
             container.addEventListener('touchend', () => {
                 isScrolling = false;
