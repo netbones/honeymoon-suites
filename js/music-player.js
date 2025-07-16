@@ -186,3 +186,15 @@ function setVolume(value) {
 function seekTo(event) {
     if (player) player.seekTo(event);
 }
+
+// Export functions to global scope
+if (typeof window !== 'undefined') {
+    window.togglePlaylist = togglePlaylist;
+    window.togglePlay = togglePlay;
+    window.nextTrack = nextTrack;
+    window.previousTrack = previousTrack;
+    window.toggleShuffle = toggleShuffle;
+    window.setVolume = setVolume;
+    window.seekTo = seekTo;
+    window.player = player;
+}

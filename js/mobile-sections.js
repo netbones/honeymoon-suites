@@ -241,12 +241,61 @@ function previousMobileSection() {
 }
 
 /**
+ * Handle smooth scrolling for navigation links
+ */
+function initSmoothScrolling() {
+    // Handle smooth scroll links
+    document.querySelectorAll('.smooth-scroll, a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's just a hash or external link
+            if (!href || href === '#' || href.startsWith('http')) return;
+            
+            e.preventDefault();
+            
+            const targetId = href.substring(1);
+            
+            // Check if we're on mobile and need to navigate to a section
+            const mobileContainer = document.querySelector('.mobile-sections-container');
+            const isMobile = mobileContainer && window.getComputedStyle(mobileContainer).display !== 'none';
+            
+            if (isMobile) {
+                // Handle mobile section navigation
+                const sectionMap = {
+                    'about': 0,
+                    'band': 1,
+                    'music': 2,
+                    'gallery': 3,
+                    'reviews': 4
+                };
+                
+                if (sectionMap.hasOwnProperty(targetId)) {
+                    swipeToSection(sectionMap[targetId]);
+                    return;
+                }
+            }
+            
+            // Handle desktop smooth scrolling
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+/**
  * Auto-initialize mobile swipeable sections when DOM is ready
  */
 document.addEventListener('DOMContentLoaded', function() {
     // Small delay to ensure all other scripts are loaded
     setTimeout(() => {
         initMobileSwipeableSections();
+        initSmoothScrolling();
     }, 100);
 });
 
@@ -257,6 +306,7 @@ if (typeof window !== 'undefined') {
     window.nextMobileSection = nextMobileSection;
     window.previousMobileSection = previousMobileSection;
     window.initMobileSwipeableSections = initMobileSwipeableSections;
+    window.initSmoothScrolling = initSmoothScrolling;
 }
 
 // Export for module systems

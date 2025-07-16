@@ -152,6 +152,27 @@
     -webkit-touch-callout: none;
 }
 
+/* Global touch highlight removal for all interactive elements */
+*, *::before, *::after {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+}
+
+button, a, [onclick], [role="button"], .btn, .carousel-control-prev, .carousel-control-next, .carousel-indicators button {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Carousel specific touch highlight removal */
+.carousel *, .carousel-inner *, .carousel-item * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+}
+
 /* Mobile section content optimizations */
 @media (max-width: 991.98px) {
     .mobile-section-slide .band-member {

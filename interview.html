@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Honeymoon Suites Interview - Sugar Magazine | Kevin Parissien</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .interview-header {
+            background: linear-gradient(45deg, rgba(233, 69, 96, 0.9), rgba(233, 69, 96, 0.7));
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .interview-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .interview-section:hover {
+            border-color: rgba(233, 69, 96, 0.4);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.2);
+        }
+        
+        .question {
+            color: #e94560;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .speaker {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .quote-highlight {
+            background: linear-gradient(45deg, rgba(233, 69, 96, 0.1), rgba(233, 69, 96, 0.05));
+            border-left: 4px solid #e94560;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .vintage-badge {
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #1a1a2e;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .band-member-tag {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+        }
+        
+        .interview-meta {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e94560, transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar will be inserted here by navbar-include.js -->
+    
+    <div class="container py-5 navbar-page-content">
+        <!-- Interview Header -->
+        <div class="interview-header p-5 text-center">
+            <div class="vintage-badge">
+                <i class="fas fa-microphone me-2"></i>Vintage Interview
+            </div>
+            <h1 class="display-3 glam-text mb-3">The New Romancers</h1>
+            <h2 class="h3 text-light mb-4">of the Purple Stage</h2>
+            <p class="lead">An intimate conversation with The Honeymoon Suites</p>
+        </div>
+        
+        <!-- Interview Meta -->
+        <div class="interview-meta">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-danger mb-3">Interview Details</h5>
+                    <p><strong>Publication:</strong> <i>Sugar Magazine</i></p>
+                    <p><strong>Interviewer:</strong> Stephen 'Sugar' Segerman</p>
+                    <p><strong>Era:</strong> 1990s Cape Town Music Scene</p>
+                    <p><strong>Featured Single:</strong> <i>Luminous Anonymity</i></p>
+                    <p><strong>Location:</strong> Cape Town, South Africa</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-danger mb-3">Band Members Featured</h5>
+                    <div class="mb-2">
+                        <span class="band-member-tag">Kevin Parissien</span>
+                        <span class="band-member-tag">Julia Uranium</span>
+                        <span class="band-member-tag">Bood Carver</span>
+                    </div>
+                    <p class="small text-muted">Lead vocals, keyboards/percussion, and bass/guitar respectively</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Interview Content -->
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-quote-left me-2"></i>Which are your favourite clubs?
+            </div>
+            <p><span class="speaker">Julia:</span> I love the parties at Ganesh. They have really impromptu parties there.</p>
+            <p><span class="speaker">Bood:</span> There's this club in Jo'burg called Carfax that I used to really like.</p>
+            <p><span class="speaker">Kevin:</span> We really like Graceland because it's so damn kitsch. We are planning to play a gig there as a launch for our video. They have this huge screen and we want to invite everyone who helped us make the video. I haven't found a club in Cape Town that I feel comfortable enough in to just sit on a couch like a lounge lizard.</p>
+            
+            <div class="quote-highlight">
+                "We really like Graceland because it's so damn kitsch"
+            </div>
+        </div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-video me-2"></i>Tell me about your video.
+            </div>
+            <p><span class="speaker">Julia:</span> We decided to do a video of our first demo "Luminous Anonymity" and the amazing thing was that although we shot it in one day, on Workers' Day! the entire crew of about 25 people all worked for nothing. It was shot by Majita Films with Tim Green directing and Platon Trakoshis producing.</p>
+            <p><span class="speaker">Kevin:</span> We asked Stefan to design the costumes for the video and he designed something different for each of us. The clothes he came up with pushed buttons in our personalities that we didn't know we had! There were floor-length red fake fur coats and sci-fi outfits with turned-up collars. He makes you feel like a rock star. As thanks for his work on our shoot we played at his fashion show but we all dressed in black so as to not compete with his creations.</p>
+            
+            <div class="quote-highlight">
+                "There were floor-length red fake fur coats and sci-fi outfits with turned up collars"
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-music me-2"></i>Why did you choose 'Luminous Anonymity' as your first single?
+            </div>
+            <p><span class="speaker">Kevin:</span> We wanted to release something that could be played on radio and TV; one that didn't have swearing etcetera on it. I mean, we couldn't release our song called "Oh My God".</p>
+            <p><span class="speaker">Julia:</span> It's hard to pick one song that is representative of our style. If we have seventeen songs then this is one seventeenth of what we do. It was recorded at B&S studios.</p>
+        </div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-star me-2"></i>I believe you performed at the Klein Karoo Festival in Oudtshoorn. How was that?
+            </div>
+            <p><span class="speaker">Julia:</span> Well, we weren't invited but we just went to play and it worked out really well as it was the first time we all got to hang out together for a week and just play our music and practise without having to schlep our gear around. We met this Afrikaans ou who owned a casino that got shut down by the cops because his clients were all from the 'lokasie' and he had this rent to cover so we offered to play in the club for a week. He took the bar takings and we kept the door.</p>
+            <p><span class="speaker">Kevin:</span> He had these eight brothers; they had their own scrum. When they first saw us perform their mouths dropped open for a while. We would change our costumes every night. By the end of the week they themselves were dressing up as well and dancing on the tables. They had this old SA flag and a new SA flag next to each other on the wall. We did these long instrumental jams in the middle of our sets and other bands and musicians would join in.</p>
+            <p><span class="speaker">Bood:</span> We didn't get to play at the Kaktus thing but Dogtroep and some Jo'burg township musicians and some of the bands from the Kaktus thing came and jammed with us. It was very strange. The whole thing was like a church fete. They had this 'praise aerobics' going on. It was not a good place for vegetarians.</p>
+            
+            <div class="quote-highlight">
+                "They had this 'praise aerobics' going on. It was not a good place for vegetarians."
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-heart me-2"></i>What qualities do you look for in your fans and groupies?
+            </div>
+            <p><span class="speaker">Kevin:</span> Mostly hysteria, an ability to let go.</p>
+            <p><span class="speaker">Julia:</span> No inhibitions. We prefer fans who want to collaborate in our Performance.</p>
+            <p><span class="speaker">Bood:</span> Like those fans in Oudtshoorn who had their hair piled up on their heads in those beehive hairstyles, they looked like the Marge Simpson sisters.</p>
+            <p><span class="speaker">Kevin:</span> After one of our gigs in Oudtshoorn this woman of about 35 came up to me and asked if she could stick her tongue in my mouth. I was quite taken aback. It was my first lewd offer but I politely told her it was not appropriate in the casino venue. I'm quite an introspective person.</p>
+            <p><span class="speaker">Julia:</span> Bullshit! (laughs)</p>
+            
+            <div class="quote-highlight">
+                "After one of our gigs in Oudtshoorn this woman of about 35 came up to me and asked if she could stick her tongue in my mouth"
+            </div>
+        </div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-compact-disc me-2"></i>Who are your musical influences?
+            </div>
+            <p><span class="speaker">Bood:</span> I was about seven when I started writing songs. It was 1977 and I was listening to my parents' music. They were listening to stuff like the Bee Gees, the Carpenters, Abba and Neil Diamond. That's where my inspiration came from. They weren't into punk and that stuff.</p>
+            <p><span class="speaker">Kevin:</span> I always liked Roy Orbison because he looked so cool dressed all in black and wearing the same funky shades. He stayed in character for like 30 years and didn't evolve with the times. Very emotional and beautiful, he was the Nick Cave of his time.</p>
+            
+            <div class="quote-highlight">
+                "I always liked Roy Orbison... he was the Nick Cave of his time"
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-cocktail me-2"></i>What's your favourite drink?
+            </div>
+            <p><span class="speaker">Julia:</span> Guinness in Ireland and Castle milk stout in South Africa.</p>
+            <p><span class="speaker">Kevin:</span> Yeah, Guinness. I'm just too poor to afford it. We sometimes have Vodka and vegetarian oysters...</p>
+            <p><span class="speaker">Julia:</span> To lubricate the vocal cords!</p>
+            <p><span class="speaker">Bood:</span> Tea.</p>
+            
+            <div class="quote-highlight">
+                "We sometimes have vodka and vegetarian oysters..."
+            </div>
+        </div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-theater-masks me-2"></i>How would you describe your band and its music?
+            </div>
+            <p><span class="speaker">Kevin:</span> It's full of "gees" and emotion. There are not enough decent girl bands so we dress up. We wear all kinds of costumes. We are also performance artists, we are street players, jugglers, fireblowers and stiltwalkers. Our music is full of innuendo. It is sexual and mostly very romantic.</p>
+            <p><span class="speaker">Bood:</span> I have a fear of shyness so we draw on a wide range of influences. It is un-angry music. You get musicians who complain about the raves because that's where all the audiences are going, but you can play that music with your hands and some of our songs are pure techno.</p>
+            <p><span class="speaker">Julia:</span> We would love to go and play in the townships as there is a lot of African rhythm in our music and (we suspect) they would love it. In Woodstock the kids come to our rehearsals and walk around singing our songs because they know all the words. Our parents can also enjoy our music. We feel music isn't something to be listened to with your eyes closed. That's why we dress up and create costumes and build sets and use all our skills because we believe people want to be entertained. The interaction with the audience is what fuels us.</p>
+            <p><span class="speaker">Kevin:</span> Joie de vivre, androgyny and sci-fi. Everything we play has to have a sense of humour as well as a kind of Elvis-y schmaltz.</p>
+            <p><span class="speaker">Julia:</span> We want to give people a complete sensation and all-round sensory experience.</p>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-users me-2"></i>How about a brief history of the band?
+            </div>
+            <p><span class="speaker">Julia:</span> We are all friends and live close by each other in Woodstock. I'm an architect and welder and designer. I stopped practising and completed a four year music degree at UCT in jazz composition and arrangement. This is my first band.</p>
+            <p><span class="speaker">Kevin:</span> I'm from Cape Town and went to art school and studied fine art and jewellery design. Started my first band at art school.</p>
+            <p><span class="speaker">Julia:</span> We met at a blacksmiths convention!</p>
+            <p><span class="speaker">Bood:</span> I've been in a lot of bands. IBM, Richard Famous and the Magnetics, to name a few. I'm a set builder and I design and create our elaborate sets and backdrops. I had a whole lot of songs I'd written that we used but now the others are also getting involved in the writing.</p>
+            
+            <div class="quote-highlight">
+                "We met at a blacksmiths convention!"
+            </div>
+        </div>
+        
+        <div class="interview-section p-4">
+            <div class="question">
+                <i class="fas fa-briefcase me-2"></i>Are you looking for a manager?
+            </div>
+            <p><span class="speaker">Julia:</span> We are currently self managed.</p>
+            <p><span class="speaker">Kevin:</span> We are looking for a manager who must be wealthy, sporty and have no job. This could be an inspiring hobby. He must handle all the admin.</p>
+            <p><span class="speaker">Julia:</span> At the moment we all work 7 days a week, 24 hours a day, towards the success of the band, doing promos and advertising. If we had a manager we could put all our energies into creating our music.</p>
+            
+            <div class="quote-highlight">
+                "We are looking for a manager who must be wealthy, sporty and have no job"
+            </div>
+        </div>
+        
+        <!-- Interview Footer -->
+        <div class="interview-meta mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-danger mb-3">Original Fan Club Info</h5>
+                    <p><strong>The Honeymoonies</strong><br>
+                    C/o Julia Uranium<br>
+                    81 Fairview Ave, Woodstock<br>
+                    Cape Town, 7925</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-danger mb-3">Featured Single</h5>
+                    <p><strong>"Luminous Anonymity"</strong><br>
+                    Lyrics: Julia, Bood and Kevin<br>
+                    Music: Bood</p>
+                    <p class="small text-muted">This interview was conducted during the promotion of their breakthrough single.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="text-center mt-5">
+            <a href="index.html" class="btn btn-outline-danger btn-lg me-3">
+                <i class="fas fa-home me-2"></i>Back to Main Site
+            </a>
+            <a href="fan-gallery.html" class="btn btn-danger btn-lg">
+                <i class="fas fa-images me-2"></i>View Gallery
+            </a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-dark py-4 mt-5">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0 text-muted">
+                    Interview originally published in Sugar Magazine | 
+                    <span class="glam-text">The Honeymoon Suites Archive</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="components/navbar-include.js"></script>
+</body>
+</html>

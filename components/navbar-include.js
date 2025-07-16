@@ -33,6 +33,11 @@
                             <i class="fas fa-star me-1"></i>Greatest Hits
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bood-carver-tribute.html" data-page="bood-carver-tribute">
+                            <i class="fas fa-heart me-1"></i>Bood Tribute
+                        </a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav" id="navbarExtras">
                     <!-- Page-specific extras will be added here -->
@@ -52,7 +57,8 @@
             '': 'home',
             'fan-gallery': 'fan-gallery',
             'gallery-extended': 'gallery-extended',
-            'greatest-hits': 'greatest-hits'
+            'greatest-hits': 'greatest-hits',
+            'bood-carver-tribute': 'bood-carver-tribute'
         };
         
         return pageMap[filename] || 'home';

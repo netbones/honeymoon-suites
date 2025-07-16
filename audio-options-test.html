@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player Test - Kevin Parissien & The Honeymoon Suites</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e94560;
+            --secondary-color: #0f3460;
+            --dark-bg: #16213e;
+            --darker-bg: #1a1a2e;
+            --text-light: #f1f1f1;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker-bg), var(--dark-bg));
+            color: var(--text-light);
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .audio-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1, h2, h3, h4 {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #fff, #e94560);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        /* Bandcamp Player Styles */
+        .bandcamp-player {
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .bandcamp-player:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Advanced Player Styles */
+        .advanced-player {
+            background: rgba(15, 52, 96, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        #waveform {
+            width: 100%;
+            height: 120px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            background: var(--primary-color);
+        }
+        
+        .playlist {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .playlist-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .playlist-item:hover, .playlist-item.active {
+            background: rgba(233, 69, 96, 0.2);
+        }
+        
+        .playlist-item.active {
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .time {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .volume-slider {
+            width: 100px;
+        }
+        
+        .back-button {
+            background: rgba(233, 69, 96, 0.9);
+            border: 2px solid #e94560;
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .back-button:hover {
+            background: rgba(233, 69, 96, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+            color: white;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Main Site
+        </a>
+
+        <h1>Audio Player Test</h1>
+        
+        <!-- Bandcamp Player Section -->
+        <div class="audio-container">
+            <h2 class="section-title"><i class="fas fa-compact-disc me-2"></i>Bandcamp Player</h2>
+            <div class="bandcamp-player">
+                <iframe style="border: 0; width: 100%; height: 470px;" 
+                        src="https://bandcamp.com/EmbeddedPlayer/album=4155001189/size=large/bgcol=333333/linkcol=0f91ff/artwork=small/transparent=true/" 
+                        seamless>
+                    <a href="https://boodie.bandcamp.com/album/hms-bood">HMS Bood by Kevin Parissien</a>
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Second Bandcamp Player -->
+        <div class="audio-container">
+            <h2 class="section-title"><i class="fas fa-compact-disc me-2"></i>HMS/Bood Album</h2>
+            <div class="text-center">
+                <iframe style="border: 0; width: 350px; height: 470px; max-width: 100%;" 
+                        src="https://bandcamp.com/EmbeddedPlayer/album=2249650380/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" 
+                        seamless>
+                    <a href="https://boodie.bandcamp.com/album/hms-bood">HMS/Bood by The Honeymoon Suites and Bood Carver</a>
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Advanced Audio Player -->
+        <div class="audio-container">
+            <h2 class="section-title"><i class="fas fa-sliders-h me-2"></i>Advanced Audio Player</h2>
+            
+            <div class="advanced-player">
+                <!-- Now Playing Info -->
+                <div class="now-playing text-center mb-4">
+                    <h4 id="nowPlayingTitle">Select a track</h4>
+                    <div class="text-muted" id="nowPlayingArtist">Kevin Parissien</div>
+                </div>
+                
+                <!-- Waveform Visualization -->
+                <div id="waveform"></div>
+                
+                <!-- Progress and Time -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="time" id="currentTime">0:00</div>
+                    <div class="time" id="totalTime">0:00</div>
+                </div>
+                
+                <!-- Controls -->
+                <div class="player-controls">
+                    <button class="control-btn" id="prevBtn" title="Previous">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="control-btn play-btn" id="playBtn" title="Play/Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="control-btn" id="nextBtn" title="Next">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                </div>
+                
+                <!-- Volume Control -->
+                <div class="volume-container justify-content-center">
+                    <i class="fas fa-volume-down"></i>
+                    <input type="range" class="form-range volume-slider" id="volumeControl" min="0" max="1" step="0.01" value="0.7">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                
+                <!-- Playlist -->
+                <h5 class="mt-4 mb-3">Playlist</h5>
+                <div class="playlist" id="playlist">
+                    <!-- Playlist items will be added by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample playlist - replace with your actual audio files
+            const playlist = [
+                {
+                    title: "HMS/Bood - Track 1",
+                    artist: "The Honeymoon Suites and Bood Carver",
+                    src: "https://boodie.bandcamp.com/track/is-it-really-you-yeah",
+                    duration: "3:45"
+                },
+                {
+                    title: "HMS/Bood - Track 2",
+                    artist: "The Honeymoon Suites and Bood Carver",
+                    src: "https://t4.bcbits.com/stream/YOUR_AUDIO_FILE_2.mp3",
+                    duration: "4:12"
+                },
+                {
+                    title: "HMS/Bood - Track 3",
+                    artist: "The Honeymoon Suites and Bood Carver",
+                    src: "https://t4.bcbits.com/stream/YOUR_AUDIO_FILE_3.mp3",
+                    duration: "3:28"
+                }
+            ];
+            
+            let currentTrackIndex = 0;
+            let wavesurfer;
+            
+            // Initialize WaveSurfer
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: 'rgba(255, 255, 255, 0.5)',
+                progressColor: '#e94560',
+                cursorColor: '#fff',
+                barWidth: 2,
+                barRadius: 3,
+                cursorWidth: 1,
+                height: 100,
+                barGap: 2,
+                responsive: true,
+                normalize: true,
+                partialRender: true
+            });
+            
+            // DOM Elements
+            const playBtn = document.getElementById('playBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const volumeControl = document.getElementById('volumeControl');
+            const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+            const nowPlayingArtist = document.getElementById('nowPlayingArtist');
+            const currentTimeEl = document.getElementById('currentTime');
+            const totalTimeEl = document.getElementById('totalTime');
+            const playlistEl = document.getElementById('playlist');
+            
+            // Initialize playlist
+            function initPlaylist() {
+                playlistEl.innerHTML = '';
+                playlist.forEach((track, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'playlist-item' + (index === currentTrackIndex ? ' active' : '');
+                    item.innerHTML = `
+                        <div>
+                            <div class="fw-bold">${track.title}</div>
+                            <small class="text-muted">${track.artist}</small>
+                        </div>
+                        <div class="time">${track.duration}</div>
+                    `;
+                    item.addEventListener('click', () => loadTrack(index));
+                    playlistEl.appendChild(item);
+                });
+            }
+            
+            // Format time (seconds to MM:SS)
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                seconds = Math.floor(seconds % 60);
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+            
+            // Load a track
+            function loadTrack(index) {
+                if (index >= 0 && index < playlist.length) {
+                    currentTrackIndex = index;
+                    const track = playlist[index];
+                    
+                    // Update UI
+                    nowPlayingTitle.textContent = track.title;
+                    nowPlayingArtist.textContent = track.artist;
+                    totalTimeEl.textContent = track.duration;
+                    
+                    // Update active state in playlist
+                    document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                        item.classList.toggle('active', i === index);
+                    });
+                    
+                    // Load and play the track
+                    wavesurfer.load(track.src);
+                    
+                    // Set up event listeners if not already set
+                    if (!wavesurfer.getDuration()) {
+                        wavesurfer.on('ready', () => {
+                            playTrack();
+                        });
+                    } else {
+                        playTrack();
+                    }
+                }
+            }
+            
+            // Play the current track
+            function playTrack() {
+                wavesurfer.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            
+            // Pause the current track
+            function pauseTrack() {
+                wavesurfer.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+            
+            // Play/Pause toggle
+            playBtn.addEventListener('click', () => {
+                if (wavesurfer.isPlaying()) {
+                    pauseTrack();
+                } else {
+                    playTrack();
+                }
+            });
+            
+            // Previous track
+            prevBtn.addEventListener('click', () => {
+                currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+                loadTrack(currentTrackIndex);
+            });
+            
+            // Next track
+            nextBtn.addEventListener('click', () => {
+                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+                loadTrack(currentTrackIndex);
+            });
+            
+            // Volume control
+            volumeControl.addEventListener('input', (e) => {
+                const volume = parseFloat(e.target.value);
+                wavesurfer.setVolume(volume);
+            });
+            
+            // Update time display
+            wavesurfer.on('audioprocess', () => {
+                currentTimeEl.textContent = formatTime(wavesurfer.getCurrentTime());
+            });
+            
+            // When track ends, play next
+            wavesurfer.on('finish', () => {
+                nextBtn.click();
+            });
+            
+            // Initialize
+            initPlaylist();
+            loadTrack(0);
+            
+            // Set initial volume
+            wavesurfer.setVolume(volumeControl.value);
+        });
+    </script>
+</body>
+</html>
