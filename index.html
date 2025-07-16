@@ -13,6 +13,139 @@
     <link href="css/bootstrap-carousel-custom.css" rel="stylesheet">
     <link href="css/video-modals.css" rel="stylesheet">
     <link rel="stylesheet" href="//unpkg.byted-static.com/xgplayer/3.0.16/dist/index.min.css">
+    <style>
+        /* Mobile Swipeable Sections */
+        .mobile-sections-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+        }
+        
+        .mobile-sections-wrapper {
+            display: flex;
+            transition: transform 0.3s ease;
+            width: 500%; /* 5 sections: about, band, music, gallery, reviews */
+        }
+        
+        .mobile-section-slide {
+            width: 20%; /* Each section takes 1/5 of wrapper width */
+            flex-shrink: 0;
+            padding: 0 15px;
+        }
+        
+        /* Mobile-only swipeable sections */
+        @media (max-width: 991.98px) {
+            .mobile-sections-container {
+                display: block;
+            }
+            
+            .desktop-sections {
+                display: none;
+            }
+            
+            /* Mobile section navigation */
+            .mobile-nav-tabs {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding: 15px 0;
+                margin: 0 -15px 20px -15px;
+                background: rgba(33, 37, 41, 0.9);
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                gap: 10px;
+            }
+            
+            .mobile-nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .mobile-nav-tab {
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 20px;
+                color: white;
+                padding: 8px 16px;
+                min-width: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                white-space: nowrap;
+                backdrop-filter: blur(10px);
+                font-size: 0.8rem;
+                flex-shrink: 0;
+                margin: 0 5px;
+            }
+            
+            .mobile-nav-tab i {
+                font-size: 1rem;
+            }
+            
+            .mobile-nav-tab.active {
+                background: linear-gradient(45deg, rgba(233, 69, 96, 0.8), rgba(233, 69, 96, 0.6));
+                border-color: #e94560;
+                color: white;
+                box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+                transform: translateY(-2px);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .mobile-sections-container {
+                display: none;
+            }
+            
+            .desktop-sections {
+                display: block;
+            }
+            
+            .mobile-nav-tabs {
+                display: none;
+            }
+        }
+        
+        /* Swipe indicators for mobile */
+        .mobile-swipe-indicator {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+        
+        .mobile-swipe-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .mobile-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .mobile-dot.active {
+            background: #e94560;
+            transform: scale(1.5);
+            box-shadow: 0 0 8px rgba(233, 69, 96, 0.5);
+        }
+        
+        /* Global touch highlight removal for mobile sections */
+        .mobile-sections-container *, 
+        .mobile-nav-tab {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none;
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-white">
     <!-- Navigation -->
@@ -58,8 +191,221 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-gray-800">
+    <!-- Mobile Swipeable Sections Container -->
+    <div class="mobile-sections-container d-lg-none">
+        <!-- Mobile Navigation Tabs -->
+        <div class="container">
+            <div class="mobile-nav-tabs" id="mobileNavTabs">
+                <div class="mobile-nav-tab active" data-section="0" onclick="swipeToSection(0)">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </div>
+                <div class="mobile-nav-tab" data-section="1" onclick="swipeToSection(1)">
+                    <i class="fas fa-users"></i>
+                    <span>Band</span>
+                </div>
+                <div class="mobile-nav-tab" data-section="2" onclick="swipeToSection(2)">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </div>
+                <div class="mobile-nav-tab" data-section="3" onclick="swipeToSection(3)">
+                    <i class="fas fa-images"></i>
+                    <span>Gallery</span>
+                </div>
+                <div class="mobile-nav-tab" data-section="4" onclick="swipeToSection(4)">
+                    <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Sections Wrapper -->
+        <div class="mobile-sections-wrapper" id="mobileSectionsWrapper">
+            <!-- About Section Slide -->
+            <div class="mobile-section-slide">
+                <section class="py-5 bg-gray-800">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h2 class="display-4 glam-text mb-4 text-center">The Legend</h2>
+                                <p class="lead mb-4 text-center">
+                                    Kevin Parissien, the charismatic frontman of The Honeymoon Suites, emerged from Cape Town's vibrant music scene in the 1990s as one of South Africa's most captivating glamrock performers.
+                                </p>
+                                <p class="mb-4">
+                                    With his magnetic stage presence and distinctive vocal style, Kevin led The Honeymoon Suites to become one of Cape Town's most beloved bands. Known for their theatrical performances, outrageous costumes, and infectious energy, the band captured the hearts of fans across South Africa.
+                                </p>
+                                <blockquote class="blockquote border-start border-danger border-4 ps-4 mb-4">
+                                    <p class="mb-0 fst-italic">"Free your ass and your mind will follow"</p>
+                                    <footer class="blockquote-footer mt-2">Kevin Parissien</footer>
+                                </blockquote>
+                                
+                                <div class="retro-card p-4 rounded-3 mt-4">
+                                    <h3 class="text-danger mb-3">Quick Facts</h3>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-microphone text-danger me-2"></i><strong>Role:</strong> Lead Vocalist</li>
+                                        <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i><strong>Origin:</strong> Cape Town, South Africa</li>
+                                        <li class="mb-2"><i class="fas fa-calendar text-danger me-2"></i><strong>Era:</strong> 1990s Glamrock Scene</li>
+                                        <li class="mb-2"><i class="fas fa-star text-danger me-2"></i><strong>Sign:</strong> Libra</li>
+                                        <li class="mb-2"><i class="fas fa-heart text-danger me-2"></i><strong>Influences:</strong> Roy Orbison, Nick Cave</li>
+                                        <li class="mb-2"><i class="fas fa-music text-danger me-2"></i><strong>Style:</strong> Glamrock, Lounge, Alternative</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Band Section Slide -->
+            <div class="mobile-section-slide">
+                <section class="py-5 bg-gray-900">
+                    <div class="container">
+                        <h2 class="display-4 text-center glam-text mb-5">The Honeymoon Suites</h2>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="band-member p-4 rounded-3 text-center mb-3">
+                                    <i class="fas fa-microphone fa-3x text-danger mb-3"></i>
+                                    <h4 class="text-danger">Kevin Parissien</h4>
+                                    <p class="text-muted">Lead Vocals</p>
+                                    <p class="small">The magnetic frontman with an introspective soul and Roy Orbison-inspired cool.</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="band-member p-4 rounded-3 text-center mb-3">
+                                    <i class="fas fa-keyboard fa-3x text-purple-400 mb-3"></i>
+                                    <h4 class="text-purple-400">Julie Uranium</h4>
+                                    <p class="text-muted">Keyboards, Percussion, Vocals</p>
+                                    <p class="small">Architect, jazz graduate, and welder. The creative force behind the band's visual aesthetic.</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="band-member p-4 rounded-3 text-center mb-3">
+                                    <i class="fas fa-guitar fa-3x text-blue-400 mb-3"></i>
+                                    <h4 class="text-blue-400">Bood Carver</h4>
+                                    <p class="text-muted">Bass, Guitar, Vocals</p>
+                                    <p class="small">Scorpio songwriter influenced by 70s classics like Bee Gees and ABBA.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Music Section Slide -->
+            <div class="mobile-section-slide">
+                <section class="py-5 bg-gray-800">
+                    <div class="container">
+                        <h2 class="display-4 text-center glam-text mb-5">Discography</h2>
+                        
+                        <!-- Simplified Album Display for Mobile -->
+                        <div class="retro-card p-4 rounded-3 text-center">
+                            <div class="album-cover mb-4 lazy-image" style="width: 200px; height: 200px; margin: 0 auto;">
+                                <img data-src="assets/5star.jpeg" 
+                                     alt="Five Star Album Cover" 
+                                     class="mx-auto rounded-3" 
+                                     style="width: 200px; height: 200px; object-fit: cover; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                            </div>
+                            <h3 class="text-danger mb-3">Five Star (1990s)</h3>
+                            <p class="lead mb-4">The definitive Honeymoon Suites experience</p>
+                            
+                            <button class="btn btn-outline-light btn-lg px-4 py-2 mb-3" onclick="togglePlaylist()">
+                                <i class="fas fa-play me-2"></i>Listen Now
+                            </button>
+                            
+                            <div class="retro-card p-3 rounded-3 mt-4 video-card" onclick="openVideoModal()">
+                                <h5 class="text-danger mb-2">
+                                    <i class="fas fa-video me-2"></i>Luminous Anonymity
+                                </h5>
+                                <p class="small mb-0">Watch the official music video</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Gallery Section Slide -->
+            <div class="mobile-section-slide">
+                <section class="py-5 bg-gray-900">
+                    <div class="container">
+                        <h2 class="display-4 text-center glam-text mb-5">Gallery</h2>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="card bg-dark border-danger live-performances-card" onclick="openLivePerformancesModal()">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-camera fa-4x text-danger mb-3"></i>
+                                        <h5 class="card-title text-danger">Live Performances</h5>
+                                        <p class="card-text">Theatrical stage shows with costume changes every night</p>
+                                        <small class="text-muted">Tap to view performance playlist</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <a href="fan-gallery.html" class="text-decoration-none">
+                                    <div class="card bg-dark border-purple-400">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-images fa-4x text-purple-400 mb-3"></i>
+                                            <h5 class="card-title text-purple-400">Fan Gallery</h5>
+                                            <p class="card-text">Explore the complete photo collection</p>
+                                            <small class="text-muted">Tap to browse gallery</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Reviews Section Slide -->
+            <div class="mobile-section-slide">
+                <section class="py-5 bg-gray-800">
+                    <div class="container">
+                        <h2 class="display-4 text-center glam-text mb-5">Press & Reviews</h2>
+                        <div class="retro-card p-4 rounded-3 mb-4">
+                            <h4 class="text-danger mb-3">Mail & Guardian (1998)</h4>
+                            <blockquote class="blockquote">
+                                <p class="mb-3 fst-italic">
+                                    "Kevin Parissien radiates so much stealthy cool that no mother would let her offspring date him. She'd do it herself."
+                                </p>
+                            </blockquote>
+                            <footer class="blockquote-footer">Janet Smith, Music Journalist</footer>
+                        </div>
+                        
+                        <div class="retro-card p-4 rounded-3">
+                            <h4 class="text-danger mb-3">Klein Karoo Festival</h4>
+                            <p class="lead mb-3">
+                                The band's legendary week-long residency at an old casino behind a butchery became the stuff of legend.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-star text-yellow-400 me-2"></i>Costume changes every night</li>
+                                <li class="mb-2"><i class="fas fa-star text-yellow-400 me-2"></i>Collaborations with Jo'burg township musicians</li>
+                                <li class="mb-2"><i class="fas fa-star text-yellow-400 me-2"></i>Unforgettable cultural exchange</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <!-- Mobile Swipe Indicators -->
+        <div class="mobile-swipe-indicator">
+            <small class="text-muted">
+                <i class="fas fa-hand-pointer me-1"></i>Swipe to navigate sections
+            </small>
+            <div class="mobile-swipe-dots">
+                <div class="mobile-dot active" data-section="0"></div>
+                <div class="mobile-dot" data-section="1"></div>
+                <div class="mobile-dot" data-section="2"></div>
+                <div class="mobile-dot" data-section="3"></div>
+                <div class="mobile-dot" data-section="4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Sections (Original) -->
+    <div class="desktop-sections d-none d-lg-block">
+        <!-- About Section -->
+        <section id="about" class="py-5 bg-gray-800">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -753,5 +1099,121 @@
     <script src="//unpkg.byted-static.com/xgplayer/3.0.16/dist/index.min.js"></script>
     <script src="js/video-modals.js"></script>
     <script src="js/index-page.js"></script>
+    
+    <script>
+        // Mobile Swipeable Sections JavaScript
+        let currentMobileSection = 0;
+        const totalMobileSections = 5;
+        
+        function swipeToSection(sectionIndex) {
+            const wrapper = document.getElementById('mobileSectionsWrapper');
+            if (!wrapper) return;
+            
+            currentMobileSection = Math.max(0, Math.min(sectionIndex, totalMobileSections - 1));
+            const translateX = -currentMobileSection * 20; // 20% per section
+            wrapper.style.transform = `translateX(${translateX}%)`;
+            
+            // Update navigation tabs
+            document.querySelectorAll('.mobile-nav-tab').forEach((tab, index) => {
+                tab.classList.toggle('active', index === currentMobileSection);
+            });
+            
+            // Update dots
+            document.querySelectorAll('.mobile-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentMobileSection);
+            });
+        }
+        
+        function initMobileSwipeableSections() {
+            const container = document.querySelector('.mobile-sections-container');
+            if (!container) return;
+            
+            let isScrolling = false;
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            
+            // Touch events for section swiping
+            container.addEventListener('touchstart', (e) => {
+                isScrolling = true;
+                startX = e.touches[0].pageX;
+                startY = e.touches[0].pageY;
+            }, { passive: true });
+            
+            container.addEventListener('touchmove', (e) => {
+                if (!isScrolling) return;
+                currentX = e.touches[0].pageX;
+                const currentY = e.touches[0].pageY;
+                
+                const deltaX = currentX - startX;
+                const deltaY = currentY - startY;
+                
+                // Only handle horizontal swipes
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            container.addEventListener('touchend', (e) => {
+                if (!isScrolling) return;
+                
+                const deltaX = currentX - startX;
+                const threshold = 50;
+                
+                if (Math.abs(deltaX) > threshold) {
+                    if (deltaX > 0 && currentMobileSection > 0) {
+                        // Swipe right - go to previous section
+                        swipeToSection(currentMobileSection - 1);
+                    } else if (deltaX < 0 && currentMobileSection < totalMobileSections - 1) {
+                        // Swipe left - go to next section
+                        swipeToSection(currentMobileSection + 1);
+                    }
+                }
+                
+                isScrolling = false;
+            }, { passive: true });
+            
+            // Dot navigation
+            document.querySelectorAll('.mobile-dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    swipeToSection(index);
+                });
+            });
+            
+            // Mobile nav tabs scrolling
+            const navTabs = document.getElementById('mobileNavTabs');
+            if (navTabs) {
+                let isNavScrolling = false;
+                let navStartX = 0;
+                let navScrollLeft = 0;
+                
+                navTabs.addEventListener('touchstart', (e) => {
+                    isNavScrolling = true;
+                    navStartX = e.touches[0].pageX - navTabs.offsetLeft;
+                    navScrollLeft = navTabs.scrollLeft;
+                });
+                
+                navTabs.addEventListener('touchmove', (e) => {
+                    if (!isNavScrolling) return;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - navTabs.offsetLeft;
+                    const walk = (x - navStartX) * 2;
+                    navTabs.scrollLeft = navScrollLeft - walk;
+                });
+                
+                navTabs.addEventListener('touchend', () => {
+                    isNavScrolling = false;
+                });
+            }
+        }
+        
+        // Initialize mobile swipeable sections when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileSwipeableSections();
+        });
+        
+        // Export function for global access
+        window.swipeToSection = swipeToSection;
+    </script>
 </body>
 </html>
