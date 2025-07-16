@@ -1,0 +1,109 @@
+<!-- 
+INTEGRATION STEPS FOR index.html:
+
+1. REMOVE the old mobile navigation tabs:
+   Remove this entire section from index.html:
+   <div class="mobile-nav-tabs" id="mobileNavTabs">
+       <div class="mobile-nav-tab active" data-section="0" onclick="swipeToSection(0)">...</div>
+       ...
+   </div>
+
+2. ADD the configuration script BEFORE closing </body> tag
+
+3. ADD the include script BEFORE closing </body> tag
+
+4. UPDATE the swipeToSection function as shown below
+
+5. OPTIONAL: Remove old mobile navigation CSS from mobile-sections.css
+   (lines related to .mobile-nav-tabs, .mobile-nav-tab)
+
+Example integration for index.html:
+-->
+<!-- Add this configuration BEFORE the mobile-bottom-nav-include.js script -->
+<script>
+// Configure mobile bottom navigation for swipeable sections
+window.mobileBottomNavConfig = {
+    config: {
+        showDots: true,
+        hideOnScroll: false,
+        autoHide: false
+    },
+    items: [
+        {
+            icon: 'fas fa-user',
+            label: 'About',
+            sectionIndex: 0,
+            callback: (index, item) => {
+                swipeToSection(item.sectionIndex);
+            }
+        },
+        {
+            icon: 'fas fa-users',
+            label: 'Band',
+            sectionIndex: 1,
+            callback: (index, item) => {
+                swipeToSection(item.sectionIndex);
+            }
+        },
+        {
+            icon: 'fas fa-music',
+            label: 'Music',
+            sectionIndex: 2,
+            callback: (index, item) => {
+                swipeToSection(item.sectionIndex);
+            }
+        },
+        {
+            icon: 'fas fa-images',
+            label: 'Gallery',
+            sectionIndex: 3,
+            callback: (index, item) => {
+                // Navigate to gallery page instead of section
+                window.location.href = 'fan-gallery.html';
+            }
+        },
+        {
+            icon: 'fas fa-star',
+            label: 'Reviews',
+            sectionIndex: 4,
+            callback: (index, item) => {
+                swipeToSection(item.sectionIndex);
+            }
+        }
+    ]
+};
+
+// Update the existing swipeToSection function to sync with bottom nav
+function swipeToSection(sectionIndex) {
+    const wrapper = document.getElementById('mobileSectionsWrapper');
+    if (!wrapper) return;
+    
+    currentMobileSection = Math.max(0, Math.min(sectionIndex, totalMobileSections - 1));
+    const translateX = -currentMobileSection * 20; // 20% per section
+    wrapper.style.transform = `translateX(${translateX}%)`;
+    
+    // Update OLD navigation tabs (if they still exist)
+    document.querySelectorAll('.mobile-nav-tab').forEach((tab, index) => {
+        tab.classList.toggle('active', index === currentMobileSection);
+    });
+    
+    // Update dots
+    document.querySelectorAll('.mobile-dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentMobileSection);
+    });
+    
+    // Sync with NEW bottom navigation
+    if (window.mobileBottomNavInstance) {
+        window.mobileBottomNavInstance.setActiveTab(currentMobileSection);
+    }
+    
+    // Mark as interacted for UI feedback
+    const container = document.querySelector('.mobile-sections-container');
+    if (container) {
+        container.classList.add('interacted');
+    }
+}
+</script>
+
+<!-- Include the mobile bottom navigation component -->
+<script src="components/mobile-bottom-nav/mobile-bottom-nav-include.js"></script>

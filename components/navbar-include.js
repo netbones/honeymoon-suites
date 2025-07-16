@@ -34,6 +34,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="interview.html" data-page="interview">
+                            <i class="fas fa-microphone me-1"></i>Interview
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="bood-carver-tribute.html" data-page="bood-carver-tribute">
                             <i class="fas fa-heart me-1"></i>Bood Tribute
                         </a>
@@ -58,6 +63,7 @@
             'fan-gallery': 'fan-gallery',
             'gallery-extended': 'gallery-extended',
             'greatest-hits': 'greatest-hits',
+            'interview': 'interview',
             'bood-carver-tribute': 'bood-carver-tribute'
         };
         

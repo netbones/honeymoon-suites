@@ -43,6 +43,8 @@ This directory contains the reusable navbar component for the Kevin Parissien & 
 - **Fan Gallery** → fan-gallery.html  
 - **Extended Gallery** → gallery-extended.html
 - **Greatest Hits** → greatest-hits.html
+- **Interview** → interview.html
+- **Bood Tribute** → bood-carver-tribute.html
 
 ## Automatic Features
 

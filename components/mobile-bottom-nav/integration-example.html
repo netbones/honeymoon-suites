@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Bottom Nav - Integration Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+    
+    <!-- Example content -->
+    <div class="container py-5">
+        <h1 class="text-center mb-5 glam-text">Mobile Bottom Navigation</h1>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Integration Example</h5>
+                        <p class="card-text">This page demonstrates the mobile bottom navigation component.</p>
+                        <p class="card-text">
+                            <strong>On mobile:</strong> You should see a bottom navigation bar with Home, Gallery, Hits, and Extended tabs.
+                        </p>
+                        <p class="card-text">
+                            <strong>On desktop:</strong> The bottom navigation is hidden and you see the regular navigation.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card bg-dark border-secondary mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title">Test Actions</h6>
+                        <button class="btn btn-outline-danger btn-sm me-2" onclick="testSetActive(0)">Set Home Active</button>
+                        <button class="btn btn-outline-danger btn-sm me-2" onclick="testSetActive(1)">Set Gallery Active</button>
+                        <button class="btn btn-outline-danger btn-sm me-2" onclick="testHide()">Hide Nav</button>
+                        <button class="btn btn-outline-danger btn-sm" onclick="testShow()">Show Nav</button>
+                    </div>
+                </div>
+                
+                <!-- Add some content to test scrolling -->
+                <div class="card bg-dark border-secondary mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title">Scroll Test Content</h6>
+                        <p>Scroll down to test the navigation behavior...</p>
+                        <div style="height: 200vh; background: linear-gradient(to bottom, transparent, rgba(233, 69, 96, 0.1));">
+                            <div class="text-center pt-5">
+                                <p>Keep scrolling...</p>
+                            </div>
+                            <div class="text-center" style="margin-top: 50vh;">
+                                <p>More content...</p>
+                            </div>
+                            <div class="text-center" style="margin-top: 50vh;">
+                                <p>Bottom of content</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Configure the mobile bottom navigation -->
+    <script>
+    window.mobileBottomNavConfig = {
+        config: {
+            showDots: false,
+            hideOnScroll: false, // Set to true to test hide on scroll
+            autoHide: false
+        },
+        items: [
+            {
+                icon: 'fas fa-home',
+                label: 'Home',
+                href: 'index.html'
+            },
+            {
+                icon: 'fas fa-images',
+                label: 'Gallery',
+                href: 'fan-gallery.html'
+            },
+            {
+                icon: 'fas fa-star',
+                label: 'Hits',
+                href: 'greatest-hits.html'
+            },
+            {
+                icon: 'fas fa-microphone',
+                label: 'Interview',
+                href: 'interview.html'
+            },
+            {
+                icon: 'fas fa-users',
+                label: 'Extended',
+                href: 'gallery-extended.html'
+            }
+        ]
+    };
+    
+    // Test functions
+    function testSetActive(index) {
+        if (window.mobileBottomNavInstance) {
+            window.mobileBottomNavInstance.setActiveTab(index);
+        }
+    }
+    
+    function testHide() {
+        if (window.mobileBottomNavInstance) {
+            window.mobileBottomNavInstance.hide();
+        }
+    }
+    
+    function testShow() {
+        if (window.mobileBottomNavInstance) {
+            window.mobileBottomNavInstance.show();
+        }
+    }
+    
+    // Listen for navigation events
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const nav = document.getElementById('mobileBottomNav');
+            if (nav) {
+                nav.addEventListener('bottomNavClick', (e) => {
+                    console.log('Bottom nav clicked:', e.detail);
+                    alert(`Clicked: ${e.detail.item.label} (Index: ${e.detail.index})`);
+                });
+            }
+        }, 500);
+    });
+    </script>
+    
+    <!-- Include the mobile bottom navigation component -->
+    <script src="mobile-bottom-nav-include.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
