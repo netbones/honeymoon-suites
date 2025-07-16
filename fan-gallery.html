@@ -322,6 +322,79 @@
         .swipeable-filters-container {
             scroll-behavior: smooth;
         }
+        
+        /* Swipeable Gallery Sections */
+        .gallery-sections-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 60vh;
+        }
+        
+        .gallery-sections-wrapper {
+            display: flex;
+            transition: transform 0.3s ease;
+            width: 400%; /* 4 sections: all, band, concerts, backstage */
+        }
+        
+        .gallery-section-slide {
+            width: 25%; /* Each section takes 1/4 of wrapper width */
+            flex-shrink: 0;
+            padding: 0 15px;
+        }
+        
+        .gallery-section-slide .gallery-section {
+            margin-bottom: 0;
+        }
+        
+        /* Mobile-only swipeable gallery */
+        @media (max-width: 991.98px) {
+            .gallery-sections-container {
+                display: block;
+            }
+            
+            .desktop-gallery {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .gallery-sections-container {
+                display: none;
+            }
+            
+            .desktop-gallery {
+                display: block;
+            }
+        }
+        
+        /* Swipe indicators */
+        .gallery-swipe-indicator {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+        
+        .gallery-swipe-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .gallery-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-dot.active {
+            background: #e94560;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -389,8 +462,336 @@
             </div>
         </div>
 
-        <!-- Band Photos Section -->
-        <div class="gallery-section p-4" data-category="band">
+        <!-- Mobile Swipeable Gallery Sections -->
+        <div class="gallery-sections-container d-lg-none">
+            <div class="gallery-sections-wrapper" id="galleryWrapper">
+                <!-- All Sections Slide -->
+                <div class="gallery-section-slide" data-category="all">
+                    <!-- Band Photos Section -->
+                    <div class="gallery-section p-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-users me-2"></i>The Band
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band1')">
+                                    <div class="vintage-frame" style="height: 250px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/honeymoons-2-e1504873114287.jpg" 
+                                             alt="The Honeymoon Suites Band Photo" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">The Complete Band</h6>
+                                        <p class="small text-muted">Douglas Armstrong, Julia Raynam, Eddie Boyd, Eastern North, Bood Carver, Kevin Parissien, Jamie Jupiter</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band2')">
+                                    <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                                        <img data-src="assets/5star.jpeg" 
+                                             alt="Five Star Album Cover" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;"
+                                             onclick="window.open('gallery-extended.html', '_blank')">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Five Star Album</h6>
+                                        <p class="small text-muted">The definitive Honeymoon Suites experience - 12 tracks of glamrock magic</p>
+                                        <small class="text-warning"><i class="fas fa-external-link-alt me-1"></i>Click for extended album details</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band3')">
+                                    <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                                        <img data-src="https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg" 
+                                             alt="Bood Carver" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Bood Carver</h6>
+                                        <p class="small text-muted">Bass & Guitar virtuoso, songwriter since age 7, influenced by 70s classics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Concert Photos Section -->
+                    <div class="gallery-section p-4 mt-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-music me-2"></i>Live Performances
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="photo-card p-3 polaroid" onclick="openLightbox('concert1')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <iframe width="100%" height="200" 
+                                                src="https://www.youtube.com/embed/v8_JU3X3UlM" 
+                                                title="Luminous Anonymity - The Honeymoon Suites" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen
+                                                style="border-radius: 5px;">
+                                        </iframe>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <h6 class="text-dark">Luminous Anonymity Video</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="photo-card p-3 polaroid" onclick="openLightbox('concert2')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <iframe width="100%" height="200" 
+                                                src="https://www.youtube.com/embed/RO79b9ggbnE" 
+                                                title="The Honeymoon Suites - Luminous Anonymity Live" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen
+                                                style="border-radius: 5px;">
+                                        </iframe>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <h6 class="text-dark">Live Performance</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Backstage & Behind the Scenes -->
+                    <div class="gallery-section p-4 mt-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-camera me-2"></i>Behind the Scenes
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage1')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/folk-me-e1504904542828.jpg" 
+                                             alt="Folk Me - Later Project" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Folk Me</h6>
+                                        <p class="small text-muted">Later musical project featuring Bood Carver and Jamie</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage2')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/cimg1891.jpg" 
+                                             alt="Angels on Horseback" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Angels on Horseback</h6>
+                                        <p class="small text-muted">Award-winning cowboy-cabaret show featuring band members</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage3')">
+                                    <div style="height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #e94560, #4ecdc4);">
+                                        <div class="text-center text-white">
+                                            <i class="fas fa-record-vinyl fa-4x mb-3"></i>
+                                            <h5>Studio Sessions</h5>
+                                            <p>B&S Studios Recording</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Recording Magic</h6>
+                                        <p class="small text-muted">Creating the Five Star album at B&S Studios</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Band Only Slide -->
+                <div class="gallery-section-slide" data-category="band">
+                    <!-- Band Photos Section -->
+                    <div class="gallery-section p-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-users me-2"></i>The Band
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band1')">
+                                    <div class="vintage-frame" style="height: 250px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/honeymoons-2-e1504873114287.jpg" 
+                                             alt="The Honeymoon Suites Band Photo" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">The Complete Band</h6>
+                                        <p class="small text-muted">Douglas Armstrong, Julia Raynam, Eddie Boyd, Eastern North, Bood Carver, Kevin Parissien, Jamie Jupiter</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band2')">
+                                    <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                                        <img data-src="assets/5star.jpeg" 
+                                             alt="Five Star Album Cover" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;"
+                                             onclick="window.open('gallery-extended.html', '_blank')">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Five Star Album</h6>
+                                        <p class="small text-muted">The definitive Honeymoon Suites experience - 12 tracks of glamrock magic</p>
+                                        <small class="text-warning"><i class="fas fa-external-link-alt me-1"></i>Click for extended album details</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('band3')">
+                                    <div class="vintage-frame lazy-image" style="height: 250px; overflow: hidden;">
+                                        <img data-src="https://helenakingwill.com/wp-content/uploads/2017/09/img_7689.jpg" 
+                                             alt="Bood Carver" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Bood Carver</h6>
+                                        <p class="small text-muted">Bass & Guitar virtuoso, songwriter since age 7, influenced by 70s classics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Concerts Only Slide -->
+                <div class="gallery-section-slide" data-category="concerts">
+                    <!-- Concert Photos Section -->
+                    <div class="gallery-section p-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-music me-2"></i>Live Performances
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="photo-card p-3 polaroid" onclick="openLightbox('concert1')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <iframe width="100%" height="200" 
+                                                src="https://www.youtube.com/embed/v8_JU3X3UlM" 
+                                                title="Luminous Anonymity - The Honeymoon Suites" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen
+                                                style="border-radius: 5px;">
+                                        </iframe>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <h6 class="text-dark">Luminous Anonymity Video</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="photo-card p-3 polaroid" onclick="openLightbox('concert2')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <iframe width="100%" height="200" 
+                                                src="https://www.youtube.com/embed/RO79b9ggbnE" 
+                                                title="The Honeymoon Suites - Luminous Anonymity Live" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen
+                                                style="border-radius: 5px;">
+                                        </iframe>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <h6 class="text-dark">Live Performance</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Backstage Only Slide -->
+                <div class="gallery-section-slide" data-category="backstage">
+                    <!-- Backstage & Behind the Scenes -->
+                    <div class="gallery-section p-4">
+                        <h3 class="text-danger mb-4">
+                            <i class="fas fa-camera me-2"></i>Behind the Scenes
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage1')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/folk-me-e1504904542828.jpg" 
+                                             alt="Folk Me - Later Project" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Folk Me</h6>
+                                        <p class="small text-muted">Later musical project featuring Bood Carver and Jamie</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage2')">
+                                    <div style="height: 200px; overflow: hidden;">
+                                        <img src="https://helenakingwill.com/wp-content/uploads/2017/09/cimg1891.jpg" 
+                                             alt="Angels on Horseback" 
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Angels on Horseback</h6>
+                                        <p class="small text-muted">Award-winning cowboy-cabaret show featuring band members</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="photo-card p-3" onclick="openLightbox('backstage3')">
+                                    <div style="height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #e94560, #4ecdc4);">
+                                        <div class="text-center text-white">
+                                            <i class="fas fa-record-vinyl fa-4x mb-3"></i>
+                                            <h5>Studio Sessions</h5>
+                                            <p>B&S Studios Recording</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-danger">Recording Magic</h6>
+                                        <p class="small text-muted">Creating the Five Star album at B&S Studios</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Swipe Indicators -->
+            <div class="gallery-swipe-indicator">
+                <small class="text-muted">
+                    <i class="fas fa-hand-pointer me-1"></i>Swipe to navigate between sections
+                </small>
+                <div class="gallery-swipe-dots">
+                    <div class="gallery-dot active" data-slide="0"></div>
+                    <div class="gallery-dot" data-slide="1"></div>
+                    <div class="gallery-dot" data-slide="2"></div>
+                    <div class="gallery-dot" data-slide="3"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Desktop Gallery (Original) -->
+        <div class="desktop-gallery d-none d-lg-block">
+            <!-- Band Photos Section -->
+            <div class="gallery-section p-4" data-category="band">
             <h3 class="text-danger mb-4">
                 <i class="fas fa-users me-2"></i>The Band
             </h3>
@@ -656,7 +1057,8 @@
     <script>
         // Page-specific gallery functions
         function filterGallery(category) {
-            const sections = document.querySelectorAll('.gallery-section');
+            // Handle desktop gallery sections
+            const sections = document.querySelectorAll('.desktop-gallery .gallery-section');
             
             sections.forEach(section => {
                 if (category === 'all') {
@@ -666,6 +1068,19 @@
                     section.style.display = sectionCategory === category ? 'block' : 'none';
                 }
             });
+            
+            // Handle mobile swipeable gallery
+            const slideMap = {
+                'all': 0,
+                'band': 1,
+                'concerts': 2,
+                'backstage': 3
+            };
+            
+            const slideIndex = slideMap[category];
+            if (slideIndex !== undefined) {
+                swipeToSlide(slideIndex);
+            }
             
             // Update active button for desktop
             document.querySelectorAll('.btn').forEach(btn => {
@@ -678,6 +1093,98 @@
             }
             
             // Update active button for mobile swipeable filters
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`[data-filter="${category}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+        
+        // Swipeable gallery functionality
+        let currentSlide = 0;
+        const totalSlides = 4;
+        
+        function swipeToSlide(slideIndex) {
+            const wrapper = document.getElementById('galleryWrapper');
+            if (!wrapper) return;
+            
+            currentSlide = Math.max(0, Math.min(slideIndex, totalSlides - 1));
+            const translateX = -currentSlide * 25; // 25% per slide
+            wrapper.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            document.querySelectorAll('.gallery-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function initSwipeableGallery() {
+            const container = document.querySelector('.gallery-sections-container');
+            if (!container) return;
+            
+            let isScrolling = false;
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            
+            // Touch events for gallery swiping
+            container.addEventListener('touchstart', (e) => {
+                isScrolling = true;
+                startX = e.touches[0].pageX;
+                startY = e.touches[0].pageY;
+            }, { passive: true });
+            
+            container.addEventListener('touchmove', (e) => {
+                if (!isScrolling) return;
+                currentX = e.touches[0].pageX;
+                const currentY = e.touches[0].pageY;
+                
+                const deltaX = currentX - startX;
+                const deltaY = currentY - startY;
+                
+                // Only handle horizontal swipes
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            container.addEventListener('touchend', (e) => {
+                if (!isScrolling) return;
+                
+                const deltaX = currentX - startX;
+                const threshold = 50;
+                
+                if (Math.abs(deltaX) > threshold) {
+                    if (deltaX > 0 && currentSlide > 0) {
+                        // Swipe right - go to previous slide
+                        swipeToSlide(currentSlide - 1);
+                        updateFilterFromSlide(currentSlide);
+                    } else if (deltaX < 0 && currentSlide < totalSlides - 1) {
+                        // Swipe left - go to next slide
+                        swipeToSlide(currentSlide + 1);
+                        updateFilterFromSlide(currentSlide);
+                    }
+                }
+                
+                isScrolling = false;
+            }, { passive: true });
+            
+            // Dot navigation
+            document.querySelectorAll('.gallery-dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    swipeToSlide(index);
+                    updateFilterFromSlide(index);
+                });
+            });
+        }
+        
+        function updateFilterFromSlide(slideIndex) {
+            const categories = ['all', 'band', 'concerts', 'backstage'];
+            const category = categories[slideIndex];
+            
+            // Update filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -919,6 +1426,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize swipeable filters
             initSwipeableFilters();
+            
+            // Initialize swipeable gallery
+            initSwipeableGallery();
             
             // Animate photo cards on scroll
             const observerOptions = {
