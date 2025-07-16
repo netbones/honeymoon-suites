@@ -100,16 +100,32 @@
 
     // Initialize navbar
     function initNavbar() {
+        // Remove any existing placeholder
+        const existingPlaceholder = document.querySelector('.navbar-placeholder');
+        if (existingPlaceholder) {
+            existingPlaceholder.remove();
+        }
+        
         // Insert navbar HTML at the beginning of body
         document.body.insertAdjacentHTML('afterbegin', navbarHTML);
         
-        // Set active nav item
-        setTimeout(() => {
-            setActiveNavItem();
-            addGalleryFilter();
-        }, 100);
+        // Set active nav item immediately
+        setActiveNavItem();
+        addGalleryFilter();
+    }
+    
+    // Add placeholder immediately to prevent layout shift
+    function addNavbarPlaceholder() {
+        if (!document.querySelector('.navbar-placeholder')) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'navbar-placeholder';
+            document.body.insertAdjacentElement('afterbegin', placeholder);
+        }
     }
 
+    // Add placeholder immediately to prevent layout shift
+    addNavbarPlaceholder();
+    
     // Auto-initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initNavbar);

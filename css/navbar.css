@@ -6,6 +6,27 @@
     background: rgba(33, 37, 41, 0.95) !important;
     border-bottom: 1px solid rgba(233, 69, 96, 0.3);
     transition: all 0.3s ease;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
+/* Prevent layout shift during navbar insertion */
+body {
+    padding-top: 76px; /* Reserve space for fixed navbar */
+}
+
+/* Navbar placeholder to prevent jump */
+.navbar-placeholder {
+    height: 76px;
+    background: rgba(33, 37, 41, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1029;
+    border-bottom: 1px solid rgba(233, 69, 96, 0.3);
 }
 
 .navbar-brand {
@@ -134,7 +155,7 @@
 
 /* Page content spacing for fixed navbar */
 .navbar-page-content {
-    margin-top: 80px;
+    margin-top: 20px; /* Reduced since body already has padding-top */
     padding-top: 20px;
 }
 
